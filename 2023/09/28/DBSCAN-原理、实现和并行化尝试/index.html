@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>DBSCAN - 原理、实现和并行化尝试 | My World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="概念DBSCAN（Density-Based Spatial Clustering of Applications with Noise），有噪声的基于密度聚类算法。  将簇定义为具有足够高密度的区域； 可以在有噪声的空间数据中发现任意形状的聚类。  关于DBSCAN的一些定义：  $E$邻域：对于给定对象，半径为Ε内的区域。 核心对象：$E$邻域内样本点数大于等于$MinPts$的给定对象。 直">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DBSCAN - 原理、实现和并行化尝试">
+<meta property="og:url" content="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E3%80%81%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%B9%B6%E8%A1%8C%E5%8C%96%E5%B0%9D%E8%AF%95/index.html">
+<meta property="og:site_name" content="My World">
+<meta property="og:description" content="概念DBSCAN（Density-Based Spatial Clustering of Applications with Noise），有噪声的基于密度聚类算法。  将簇定义为具有足够高密度的区域； 可以在有噪声的空间数据中发现任意形状的聚类。  关于DBSCAN的一些定义：  $E$邻域：对于给定对象，半径为Ε内的区域。 核心对象：$E$邻域内样本点数大于等于$MinPts$的给定对象。 直">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-28T08:42:02.000Z">
+<meta property="article:modified_time" content="2023-09-28T09:06:54.783Z">
+<meta property="article:author" content="Bill Cai">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="My World" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My World</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://bill-cai.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-DBSCAN-原理、实现和并行化尝试" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E3%80%81%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%B9%B6%E8%A1%8C%E5%8C%96%E5%B0%9D%E8%AF%95/" class="article-date">
+  <time class="dt-published" datetime="2023-09-28T08:42:02.000Z" itemprop="datePublished">2023-09-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      DBSCAN - 原理、实现和并行化尝试
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>DBSCAN（Density-Based Spatial Clustering of Applications with Noise），有噪声的基于密度聚类算法。</p>
+<ul>
+<li>将簇定义为具有足够高密度的区域；</li>
+<li>可以在<strong>有噪声</strong>的空间数据中发现<strong>任意形状</strong>的聚类。</li>
+</ul>
+<p>关于DBSCAN的一些定义：</p>
+<ul>
+<li>$E$邻域：对于给定对象，半径为Ε内的区域。</li>
+<li>核心对象：$E$邻域内样本点数大于等于$MinPts$的给定对象。</li>
+<li>直接密度可达：对于样本集合$D$，如果样本点$q$在$p$的$Ε$邻域内，并且$p$为核心对象，那么对象$q$从对象$p$直接密度可达。</li>
+<li>密度可达：对于样本集合$D$，给定一串样本点$p_1,p_2,…,p_n$，$p&#x3D;p_1$，$q&#x3D;p_n$，假如对象$p_i$从$p_{i-1}$直接密度可达，那么对象$q$从对象$p$密度可达。</li>
+<li>密度相连：存在样本集合$D$中的一点$o$，如果对象$o$到对象$p$和对象$q$都是密度可达的，那么$p$和$q$密度相联。</li>
+</ul>
+<p><strong>DBSCAN目的是找到密度相连对象的最大集合。</strong></p>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><figure class="highlight plaintext"><figcaption><span>text</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">REPEAT:</span><br><span class="line">    选取未处理的一个点P进行处理</span><br><span class="line">    IF P是核心点</span><br><span class="line">        THEN 找出P的所有密度相连的点，形成簇</span><br><span class="line">    ELSE P是非核心点</span><br><span class="line">        CONTINUE</span><br><span class="line">UNTIL所有点都被处理</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E3%80%81%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%B9%B6%E8%A1%8C%E5%8C%96%E5%B0%9D%E8%AF%95/" data-id="cln2ybvhp00001kul0khy3jjf" data-title="DBSCAN - 原理、实现和并行化尝试" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/09/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E3%80%81%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%B9%B6%E8%A1%8C%E5%8C%96%E5%B0%9D%E8%AF%95/">DBSCAN - 原理、实现和并行化尝试</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/26/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客搭建 - 基于Hexo</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Bill Cai<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
