@@ -95,7 +95,9 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>DBSCAN（Density-Based Spatial Clustering of Applications with Noise），有噪声的基于密度聚类算法。</p>
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>DBSCAN（Density-Based Spatial Clustering of Applications with Noise），有噪声的基于密度聚类算法。</p>
 <ul>
 <li>将簇定义为具有足够高密度的区域；</li>
 <li>可以在<strong>有噪声</strong>的空间数据中发现<strong>任意形状</strong>的聚类。</li>
@@ -118,15 +120,13 @@
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">导入dbscan算法</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">data = np.loadtxt(<span class="string">&quot;788points.txt&quot;</span>, dtype=<span class="string">&quot;float32&quot;</span>, delimiter=<span class="string">&quot;,&quot;</span>)</span><br><span class="line">data_c = dbscan(data, <span class="number">2</span>, <span class="number">14</span>, dist2D)</span><br><span class="line"></span><br><span class="line">plt.scatter([a[<span class="number">0</span>] <span class="keyword">for</span> a <span class="keyword">in</span> data], [a[<span class="number">1</span>] <span class="keyword">for</span> a <span class="keyword">in</span> data], c=data_c)</span><br></pre></td></tr></table></figure>
 
 <p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20230929203645.png" alt="dbscan分类结果图"></p>
-
-
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/565701739">基于密度的聚类算法DBSCAN原理与实现 - 知乎 (zhihu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DBSCAN/4864716">DBSCAN_百度百科 (baidu.com)</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E3%80%81%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%B9%B6%E8%A1%8C%E5%8C%96%E5%B0%9D%E8%AF%95/" data-id="cln4mzz8q0000msulgyds0rt5" data-title="DBSCAN - 原理、实现和并行化尝试" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E3%80%81%E5%AE%9E%E7%8E%B0%E5%92%8C%E5%B9%B6%E8%A1%8C%E5%8C%96%E5%B0%9D%E8%AF%95/" data-id="cln4nd15c0000ycul4qwrhuln" data-title="DBSCAN - 原理、实现和并行化尝试" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -177,7 +177,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/26/hello-world/" data-id="cln4mzz8v0001msulddkc0rev" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/26/hello-world/" data-id="cln4nd15n0001ycul75rh961o" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -247,7 +247,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-id="cln4mzz910002msul5a7y0jx1" data-title="个人博客搭建 - 基于Hexo" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-id="cln4nd15u0002yculgzl576v2" data-title="个人博客搭建 - 基于Hexo" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
