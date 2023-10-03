@@ -73,6 +73,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Vim编辑器使用" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/03/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time class="dt-published" datetime="2023-10-03T12:55:47.000Z" itemprop="datePublished">2023-10-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/03/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">Vim编辑器使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Vi&#x2F;Vim编辑器，是命令行下的文本编辑器，用来编辑文件。</p>
+<p>Vim是Vi的升级版，一般用Vim即可。</p>
+<p>基本命令：<code>Vim Linux路径</code>或<code>Vi Linux路径</code></p>
+<h2 id="运行模式"><a href="#运行模式" class="headerlink" title="运行模式"></a>运行模式</h2><p>命令模式：默认模式，可以通过键盘快捷键控制文件内容。</p>
+<p>输入模式：通过命令模式进入，可以输入内容进行编辑，<code>esc</code>退出到命令模式。</p>
+<p>底线命令模式：通过命令模式进入，可以对文件进行保存、关闭等操作。</p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003205511.png" alt="Vi/Vim工作模式切换"></p>
+<h3 id="命令模式快捷键"><a href="#命令模式快捷键" class="headerlink" title="命令模式快捷键"></a>命令模式快捷键</h3><p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003210317.png" alt="命令模式快捷键"></p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003210354.png" alt="命令模式快捷键"></p>
+<h3 id="底线命令模式命令"><a href="#底线命令模式命令" class="headerlink" title="底线命令模式命令"></a>底线命令模式命令</h3><p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003210513.png" alt="底线命令模式命令"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/03/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" data-id="clnac2lb80003d0ulbuhgdb9s" data-title="Vim编辑器使用" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-02-Linux基本命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" class="article-date">
@@ -233,11 +283,32 @@
 <p>表示将左侧的命令结果作为右侧命令的输入。</p>
 <p>例如：</p>
 <p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003203212.png" alt="管道符使用示例"></p>
-<h3 id="Linux重定向命令"><a href="#Linux重定向命令" class="headerlink" title="Linux重定向命令"></a>Linux重定向命令</h3>
+<h2 id="Linux重定向命令"><a href="#Linux重定向命令" class="headerlink" title="Linux重定向命令"></a>Linux重定向命令</h2><h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h3><p>使用<code>echo</code>命令在命令行内输出指定的内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 输出的内容</span><br></pre></td></tr></table></figure>
+
+<p>无选项，参数为需要输出的内容，复杂内容可以使用<code>&quot; &quot;</code>引起来。</p>
+<p>可以使用<strong>反引号</strong>&#x2F;<strong>飘号</strong>（ ` ）引住命令，则命令会被执行，且输出会被作为echo输出的内容。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> Hello world!</span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Hello world!&quot;</span></span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> `<span class="built_in">ls</span>`</span><br><span class="line">a.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="重定向符"><a href="#重定向符" class="headerlink" title="重定向符"></a>重定向符</h3><p><code>&gt;</code>：将左侧命令的结果，<strong>覆盖</strong>写到右侧指定的文件中。</p>
+<p><code>&gt;&gt;</code>：将左侧命令的结果，<strong>追加</strong>写到右侧指定的文件中。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">abc kka</span><br><span class="line">ae12k</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Hello world!&quot;</span> &gt; a.txt</span><br><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Bye.&quot;</span> &gt;&gt; a.txt</span><br><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">Hello world!</span><br><span class="line">Bye.</span><br></pre></td></tr></table></figure>
+
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><p>查看文件尾部内容，跟踪文件的最新更改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> [-f -&lt;num&gt;] Linux路径</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-f</code>，表示持续跟踪；<code>ctrl+C</code>退出</li>
+<li><code>-num</code>，表示查看尾部行数，默认为10行（相当于<code>-10</code>）</li>
+<li>参数，必填，表示被跟踪的文件路径</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" data-id="clnaayaz30001v4ulgroe5s4a" data-title="02 Linux基本命令【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" data-id="clnac2lba0005d0ul5r1rghad" data-title="02 Linux基本命令【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -294,7 +365,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/" data-id="clnaayazb0009v4ulenujhrxm" data-title="Windows上的Linux子系统：WSL" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/" data-id="clnac2lb90004d0ulfnp634zf" data-title="Windows上的Linux子系统：WSL" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -370,7 +441,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/03/01%20Linux%E5%9F%BA%E7%A1%80/" data-id="clnaayayv0000v4ul3ecu54vv" data-title="01 Linux基础【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/03/01%20Linux%E5%9F%BA%E7%A1%80/" data-id="clnac2law0000d0ul26esd68m" data-title="01 Linux基础【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -437,65 +508,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" data-id="clnaayaz90006v4ul140t2i19" data-title="DBSCAN - 原理和实现" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" data-id="clnac2lb40001d0ul4t1f5j3d" data-title="DBSCAN - 原理和实现" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/09/26/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2023-09-26T07:22:47.000Z" itemprop="datePublished">2023-09-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/09/26/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-<h3 id="One-step-command"><a href="#One-step-command" class="headerlink" title="One step command"></a>One step command</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npx hexo clean &amp;&amp; npx hexo g &amp;&amp; npx hexo s</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/26/hello-world/" data-id="clnaayaza0007v4ul480x534d" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
 
     </footer>
   </div>
@@ -555,6 +572,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/03/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">Vim编辑器使用</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">02 Linux基本命令【Linux再学|黑马】</a>
           </li>
         
@@ -568,10 +589,6 @@
         
           <li>
             <a href="/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/">DBSCAN - 原理和实现</a>
-          </li>
-        
-          <li>
-            <a href="/2023/09/26/hello-world/">Hello World</a>
           </li>
         
       </ul>

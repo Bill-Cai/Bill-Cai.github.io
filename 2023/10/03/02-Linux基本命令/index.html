@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003203212.png">
 <meta property="article:published_time" content="2023-10-03T09:38:21.000Z">
-<meta property="article:modified_time" content="2023-10-03T12:34:38.030Z">
+<meta property="article:modified_time" content="2023-10-03T12:52:56.325Z">
 <meta property="article:author" content="Bill Cai">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -238,11 +238,32 @@
 <p>表示将左侧的命令结果作为右侧命令的输入。</p>
 <p>例如：</p>
 <p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003203212.png" alt="管道符使用示例"></p>
-<h3 id="Linux重定向命令"><a href="#Linux重定向命令" class="headerlink" title="Linux重定向命令"></a>Linux重定向命令</h3>
+<h2 id="Linux重定向命令"><a href="#Linux重定向命令" class="headerlink" title="Linux重定向命令"></a>Linux重定向命令</h2><h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h3><p>使用<code>echo</code>命令在命令行内输出指定的内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 输出的内容</span><br></pre></td></tr></table></figure>
+
+<p>无选项，参数为需要输出的内容，复杂内容可以使用<code>&quot; &quot;</code>引起来。</p>
+<p>可以使用<strong>反引号</strong>&#x2F;<strong>飘号</strong>（ ` ）引住命令，则命令会被执行，且输出会被作为echo输出的内容。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> Hello world!</span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Hello world!&quot;</span></span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> `<span class="built_in">ls</span>`</span><br><span class="line">a.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="重定向符"><a href="#重定向符" class="headerlink" title="重定向符"></a>重定向符</h3><p><code>&gt;</code>：将左侧命令的结果，<strong>覆盖</strong>写到右侧指定的文件中。</p>
+<p><code>&gt;&gt;</code>：将左侧命令的结果，<strong>追加</strong>写到右侧指定的文件中。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">abc kka</span><br><span class="line">ae12k</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Hello world!&quot;</span> &gt; a.txt</span><br><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Bye.&quot;</span> &gt;&gt; a.txt</span><br><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">Hello world!</span><br><span class="line">Bye.</span><br></pre></td></tr></table></figure>
+
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><p>查看文件尾部内容，跟踪文件的最新更改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> [-f -&lt;num&gt;] Linux路径</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-f</code>，表示持续跟踪；<code>ctrl+C</code>退出</li>
+<li><code>-num</code>，表示查看尾部行数，默认为10行（相当于<code>-10</code>）</li>
+<li>参数，必填，表示被跟踪的文件路径</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" data-id="clnaayaz30001v4ulgroe5s4a" data-title="02 Linux基本命令【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" data-id="clnac2lba0005d0ul5r1rghad" data-title="02 Linux基本命令【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -253,6 +274,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2023/10/03/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Vim编辑器使用
+        
+      </div>
+    </a>
   
   
     <a href="/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/" id="article-nav-older" class="article-nav-link-wrap">
@@ -309,6 +339,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/03/Vim%E7%BC%96%E8%BE%91%E5%99%A8%E4%BD%BF%E7%94%A8/">Vim编辑器使用</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">02 Linux基本命令【Linux再学|黑马】</a>
           </li>
         
@@ -322,10 +356,6 @@
         
           <li>
             <a href="/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/">DBSCAN - 原理和实现</a>
-          </li>
-        
-          <li>
-            <a href="/2023/09/26/hello-world/">Hello World</a>
           </li>
         
       </ul>
