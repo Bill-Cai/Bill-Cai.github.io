@@ -4,23 +4,15 @@
   <meta charset="utf-8">
   
   
-  <title>DBSCAN - 原理和实现 | My World</title>
+  <title>My World</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="概念DBSCAN（Density-Based Spatial Clustering of Applications with Noise），有噪声的基于密度聚类算法。  将簇定义为具有足够高密度的区域； 可以在有噪声的空间数据中发现任意形状的聚类。  关于DBSCAN的一些定义：  $E$邻域：对于给定对象，半径为Ε内的区域。 核心对象：$E$邻域内样本点数大于等于$MinPts$的给定对象。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="DBSCAN - 原理和实现">
-<meta property="og:url" content="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="My World">
+<meta property="og:url" content="http://bill-cai.github.io/page/3/index.html">
 <meta property="og:site_name" content="My World">
-<meta property="og:description" content="概念DBSCAN（Density-Based Spatial Clustering of Applications with Noise），有噪声的基于密度聚类算法。  将簇定义为具有足够高密度的区域； 可以在有噪声的空间数据中发现任意形状的聚类。  关于DBSCAN的一些定义：  $E$邻域：对于给定对象，半径为Ε内的区域。 核心对象：$E$邻域内样本点数大于等于$MinPts$的给定对象。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20230929203645.png">
-<meta property="article:published_time" content="2023-09-28T08:42:02.000Z">
-<meta property="article:modified_time" content="2023-10-03T09:46:17.368Z">
 <meta property="article:author" content="Bill Cai">
-<meta property="article:tag" content="Algorithm">
-<meta property="article:tag" content="Cluster analysis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20230929203645.png">
   
     <link rel="alternate" href="/atom.xml" title="My World" type="application/atom+xml">
   
@@ -79,7 +71,9 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-DBSCAN-原理和实现" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main">
+  
+    <article id="post-DBSCAN-原理和实现" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" class="article-date">
   <time class="dt-published" datetime="2023-09-28T08:42:02.000Z" itemprop="datePublished">2023-09-28</time>
@@ -92,8 +86,8 @@
       <header class="article-header">
         
   
-    <h1 class="p-name article-title" itemprop="headline name">
-      DBSCAN - 原理和实现
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/">DBSCAN - 原理和实现</a>
     </h1>
   
 
@@ -141,29 +135,143 @@
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2023/10/03/01%20Linux%E5%9F%BA%E7%A1%80/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          01 Linux基础【Linux再学|黑马】
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2023/09/26/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
-  
-</nav>
+</article>
 
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/09/26/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2023-09-26T07:22:47.000Z" itemprop="datePublished">2023-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/09/26/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h3 id="One-step-command"><a href="#One-step-command" class="headerlink" title="One step command"></a>One step command</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npx hexo clean &amp;&amp; npx hexo g &amp;&amp; npx hexo s</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/09/26/hello-world/" data-id="clnb6pdpy000kv4ule6w16sr0" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
+
+    </footer>
+  </div>
   
 </article>
 
+
+
+  
+    <article id="post-基于Hexo搭建个人博客" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-date">
+  <time class="dt-published" datetime="2023-09-26T07:13:57.000Z" itemprop="datePublished">2023-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客搭建 - 基于Hexo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="搭建思路"><a href="#搭建思路" class="headerlink" title="搭建思路"></a>搭建思路</h2><ol>
+<li>安装Hexo<ol>
+<li>安装node.js环境（node，npm）</li>
+<li>局部安装Hexo：<code>npm install hexo</code></li>
+</ol>
+</li>
+<li>新建blog文件夹，并cd到blog文件夹下</li>
+<li>通过<code>npx hexo init</code>初始化</li>
+<li>本地启动hexo服务：<code>npx hexo server</code>或者简写为<code>npx hexo s</code></li>
+<li>访问默认的<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a>网页查看</li>
+</ol>
+<h2 id="新建博客"><a href="#新建博客" class="headerlink" title="新建博客"></a>新建博客</h2><ol>
+<li>创建md文件：<code>npx hexo n &quot;blog-file-name&quot;</code></li>
+<li>删除hexo生成的所有文档（其实就是清理public文件夹）：<code>npx hexo clean</code></li>
+<li>重新生成页面文档：<code>npx hexo g</code></li>
+<li>启动服务，访问博客网页</li>
+</ol>
+<h2 id="网页部署"><a href="#网页部署" class="headerlink" title="网页部署"></a>网页部署</h2><ol>
+<li><p>注册GitHub账号，创建代码仓库，要求仓库名为<code>&lt;username&gt;.github.io</code>，因为GitHub Page解析的时候是找的这个名称</p>
+</li>
+<li><p>安装Hexo依赖：<code>npm install --save hexo-deployer-git</code></p>
+</li>
+<li><p>修改配置文件<code>_config.yml</code>，在最下方的<code>deploy</code>部分添加git配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:Bill-Cai/Bill-Cai.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部署（上传至GitHub）：<code>npx hexo d</code></p>
+</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av44544186">手把手教你从0开始搭建自己的个人博客 |无坑版视频教程| hexo_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145777879">hexo博客系统的实现原理与搭建 | 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://goldstine.github.io/create_blog_with_github_pages/">可能是最全面的github pages搭建个人博客教程 – goldstine’s blog – 个人技术公众号：Goldstine 分享编程资源 | 学习路线</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Night__breeze/article/details/122389128">详解Hexo搭建博客的底层原理_hexo 源码解析-CSDN博客</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-id="clnb6pdq2000xv4ulcm9qc5zf" data-title="个人博客搭建 - 基于Hexo" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
 
 </section>
         
