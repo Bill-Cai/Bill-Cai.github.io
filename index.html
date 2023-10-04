@@ -73,6 +73,167 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Linux环境变量" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="article-date">
+  <time class="dt-published" datetime="2023-10-04T04:56:30.000Z" itemprop="datePublished">2023-10-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>Linux上使用的一系列命令本质上是一个个的可执行程序。</p>
+<ul>
+<li>例如，<code>bash</code>本质上是<code>/bin/bash</code></li>
+</ul>
+<p>之所以这些命令无论在什么工作目录都能执行，就是因为有<strong>环境变量</strong>。</p>
+<p>环境变量，是操作系统在运行时记录的一些关键性的信息，用以辅助系统运行。</p>
+<p>在Linux系统中通过<code>env</code>命令可以查看当前系统中记录的环境变量。</p>
+<ul>
+<li>环境变量以<code>key=value</code>的形式记录。</li>
+</ul>
+<h2 id="PATH"><a href="#PATH" class="headerlink" title="PATH"></a>PATH</h2><p>PATH记录了系统执行任何命令的搜索路径。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">env</span> | grep PATH</span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib</span><br></pre></td></tr></table></figure>
+
+<p>当执行命令时，会按照上面的顺序搜索要执行的程序的本体。</p>
+<h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><h3 id="符号"><a href="#符号" class="headerlink" title="$符号"></a><code>$</code>符号</h3><p><code>$</code>符号用于取变量的值。</p>
+<ul>
+<li>可以通过<code>&#123;&#125;</code>标注要取的变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib</span><br><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH&#125;</span>ABC</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/libABC</span><br></pre></td></tr></table></figure>
+
+<h3 id="临时设置"><a href="#临时设置" class="headerlink" title="临时设置"></a>临时设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> 变量名=变量值</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/opt/conda/bin:<span class="variable">$&#123;PATH&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="永久生效"><a href="#永久生效" class="headerlink" title="永久生效"></a>永久生效</h3><p>针对当前用户，修改配置文件<code>~/.bashrc</code></p>
+<p>针对所有用户，修改配置文件<code>/etc/profile</code></p>
+<p>执行<code>source 配置文件</code>使修改立即生效（或者重新登录终端）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="clnbaomgb000fakulgic946nn" data-title="Linux环境变量" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-06-Linux进程管理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2023-10-04T03:59:37.000Z" itemprop="datePublished">2023-10-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">06-Linux进程管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>程序运行在操作系统中时，是被操作系统所管理的。</p>
+<p>为管理运行的程序，每个程序在运行时都会在操作系统中注册为系统中的一个<strong>进程</strong>。</p>
+<p>并且，操作系统会给每个进程分配一个<strong>独有</strong>的<strong>进程号</strong>（进程ID）。</p>
+<h2 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h2><p>通过<code>ps</code>命令查看Linux系统中的进程信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps [-e -f]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-e</code>，显示出全部的进程</li>
+<li><code>-f</code>，以完全格式化的形式展示信息（展示全部信息）</li>
+</ul>
+<p>一般，固定使用<code>ps -ef</code>列出全部进程的全部信息。</p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004121104.png" alt="查看进程信息"></p>
+<h2 id="关闭进程"><a href="#关闭进程" class="headerlink" title="关闭进程"></a>关闭进程</h2><p>在Linux中，通过<code>kill</code>命令关闭进程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> [-9] 进程ID</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-9</code>，表示强制关闭进程。如果不使用该选项，则会向该进程发送关闭信息，能否成功关闭需要看进程自身的处理机制。</li>
+</ul>
+<h2 id="主机状态"><a href="#主机状态" class="headerlink" title="主机状态"></a>主机状态</h2><p>可以通过<code>top</code>命令查看CPU、内存使用情况，类似于Windows的任务管理器。</p>
+<ul>
+<li>默认每5秒刷新一次。</li>
+<li>通过<code>q</code>或<code>ctrl+C</code>退出。</li>
+</ul>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004124044.png" alt="top命令查看主机状态"></p>
+<p><code>top</code>命令支持选项：</p>
+<ul>
+<li><code>-p</code>，只显示某个进程信息</li>
+<li><code>-d</code>，设置刷新时间，默认5秒</li>
+<li><code>-c</code>，显示产生进程的完整命令，默认是进程名</li>
+<li><code>-n</code>，指定刷新次数</li>
+<li><code>-b</code>，以批次的非交互非全屏模式运行。一般配合<code>-n</code>指定输出次数并将输出重定向到指定文件，如<code>top -b -n 3 &gt; /tmp/top.info</code></li>
+<li><code>-i</code>，不显示任何闲置（idle）或无用（zombie）进程</li>
+<li><code>-u</code>，查找特定用户启动的进程</li>
+</ul>
+<p><code>top</code>命令交互运行状态下，可以使用<code>H</code>（显示帮助画面）、<code>C</code>（显示完整命令）等按键实现功能。</p>
+<h2 id="磁盘信息"><a href="#磁盘信息" class="headerlink" title="磁盘信息"></a>磁盘信息</h2><p>通过<code>df</code>命令查看硬盘的使用情况。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> [-h]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004124856.png" alt="df -h"></p>
+<p>通过<code>iostat</code>查看CPU、磁盘的相关信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iostat [-x] [num1] [num2]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-x</code>，显示更多信息</li>
+<li>参数<code>num1</code>表示刷新间隔，参数<code>num2</code>表示刷新次数</li>
+</ul>
+<h2 id="网络状态"><a href="#网络状态" class="headerlink" title="网络状态"></a>网络状态</h2><p>通过<code>sar</code>查看网络的相关信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -n DEV num1 num2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-n</code>，查看网络，<code>DEV</code>表示网络接口</li>
+<li>参数<code>num1</code>表示刷新间隔，参数<code>num2</code>表示刷新次数</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnbaomg60005akul0k72d08b" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-05-Linux网络" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" class="article-date">
@@ -95,9 +256,7 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <meta name="referrer" content="no-referrer" />
-
-<h2 id="网络传输"><a href="#网络传输" class="headerlink" title="网络传输"></a>网络传输</h2><h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>检查指定的网络服务器是否为可联通状态。</p>
+        <h2 id="网络传输"><a href="#网络传输" class="headerlink" title="网络传输"></a>网络传输</h2><h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><p>检查指定的网络服务器是否为可联通状态。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping [-c num] ip或主机名</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -142,7 +301,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnb6pdpq0004v4ul4rb48f17" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnbaomg50003akule1vj4bxh" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -213,7 +372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clnb6pdpx000iv4ul27ct5w9c" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clnbaomgb000dakulhs44hp9o" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -290,160 +449,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/" data-id="clnb6pdpt0008v4ul3d6l1ytx" data-title="Linux其他命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Linux常用快捷键" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="article-date">
-  <time class="dt-published" datetime="2023-10-04T01:30:02.000Z" itemprop="datePublished">2023-10-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/">Linux常用快捷键</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><p><code>ctrl+C</code></p>
-<ul>
-<li>强制停止命令执行</li>
-<li>命令输入错误时，退出当前输入</li>
-</ul>
-<p><code>ctrl+D</code></p>
-<ul>
-<li>退出账户登录</li>
-<li>退出特定程序（例如Python的交互环境）</li>
-<li>不能用于退出Vim&#x2F;Vi</li>
-</ul>
-<p><code>history</code></p>
-<ul>
-<li>查看历史输入过的命令</li>
-</ul>
-<p><code>!</code>+前缀字符</p>
-<ul>
-<li>自动匹配上一个前缀相同的命令</li>
-</ul>
-<p><code>ctrl+R</code>，输入命令</p>
-<ul>
-<li>匹配历史命令</li>
-<li>回车键直接执行</li>
-<li>键盘左右键，得到此命令（不执行）</li>
-</ul>
-<p><code>ctrl+a</code>，光标跳到命令开头</p>
-<p><code>ctrl+e</code>，光标跳到命令结尾</p>
-<p><code>ctrl+左键</code>，光标左跳一个单词</p>
-<p><code>ctrl+右键</code>，光标右跳一个单词</p>
-<p><code>ctrl+L</code>或者<code>clear</code></p>
-<ul>
-<li>清空终端内容</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" data-id="clnb6pdpv000dv4ul5dne36zt" data-title="Linux常用快捷键" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-04-Linux软件安装" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/10/04/04-Linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" class="article-date">
-  <time class="dt-published" datetime="2023-10-04T01:05:17.000Z" itemprop="datePublished">2023-10-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/10/04/04-Linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">04-Linux软件安装【Linux再学|黑马】</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <meta name="referrer" content="no-referrer" />
-
-<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><p>操作系统安装软件的方式：</p>
-<ul>
-<li>下载安装包自行安装：<ul>
-<li>Windows系统，<code>.exe</code>文件、<code>.msi</code>文件等</li>
-<li>Mac系统，<code>.dmg</code>文件、<code>.pkg</code>文件等</li>
-</ul>
-</li>
-<li>系统的应用商店安装：<ul>
-<li>Windows系统，Microsoft Store</li>
-<li>Mac系统，AppStore</li>
-</ul>
-</li>
-</ul>
-<p>CentOS，使用yum命令安装软件。</p>
-<p>Ubuntu，使用apt命令安装软件。</p>
-<h3 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h3><p><code>yum</code>，CentOS的RPM包管理器，用于自动化安装配置Linux软件，并可以自动解决依赖问题。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum [-y] [install | remove | search] 软件名称</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>-y</code>，自动确认安装或卸载</li>
-</ul>
-<p><strong>yum命令需要root权限，需要联网。</strong></p>
-<h3 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h3><p>Ubuntu使用apt包管理器（安装<code>.deb</code>文件）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt [-y] [install | remove | search] 软件名称</span><br></pre></td></tr></table></figure>
-
-<p>用法和yum一致，也需要<strong>root权限和联网</strong>。</p>
-<h2 id="服务控制"><a href="#服务控制" class="headerlink" title="服务控制"></a>服务控制</h2><p>Linux系统很多软件支持使用功能<code>systemctl</code>命令控制：启动、停止、开机自启。</p>
-<p>能够被systemctl管理的软件，一般被称为<strong>服务</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start | stop | status | <span class="built_in">enable</span> | <span class="built_in">disable</span> 服务名</span><br></pre></td></tr></table></figure>
-
-<p>系统内置的服务比较多，如：</p>
-<ul>
-<li>NetworkManager，主网络服务</li>
-<li>network，副网络服务</li>
-<li>firewalld，防火墙服务</li>
-<li>sshd，ssh服务</li>
-</ul>
-<p>第三方软件，只要有注册服务功能的，就可以通过systemctl进行控制。（也可以通过手动添加注册服务）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/04-Linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" data-id="clnb6pdpr0005v4uldqge4x1k" data-title="04-Linux软件安装【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/" data-id="clnbaomgg000sakul1kumdnei" data-title="Linux其他命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -507,6 +513,14 @@
       <ul>
         
           <li>
+            <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">06-Linux进程管理</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/">05-Linux网络</a>
           </li>
         
@@ -516,14 +530,6 @@
         
           <li>
             <a href="/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/">Linux其他命令</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/">Linux常用快捷键</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/04-Linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">04-Linux软件安装【Linux再学|黑马】</a>
           </li>
         
       </ul>

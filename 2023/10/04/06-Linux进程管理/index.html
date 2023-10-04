@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>06-Linux进程管理 | My World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="进程程序运行在操作系统中时，是被操作系统所管理的。 为管理运行的程序，每个程序在运行时都会在操作系统中注册为系统中的一个进程。 并且，操作系统会给每个进程分配一个独有的进程号（进程ID）。 查看进程通过ps命令查看Linux系统中的进程信息。 1ps [-e -f]   -e，显示出全部的进程 -f，以完全格式化的形式展示信息（展示全部信息）  一般，固定使用ps -ef列出全部进程的全部信息。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06-Linux进程管理">
+<meta property="og:url" content="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="My World">
+<meta property="og:description" content="进程程序运行在操作系统中时，是被操作系统所管理的。 为管理运行的程序，每个程序在运行时都会在操作系统中注册为系统中的一个进程。 并且，操作系统会给每个进程分配一个独有的进程号（进程ID）。 查看进程通过ps命令查看Linux系统中的进程信息。 1ps [-e -f]   -e，显示出全部的进程 -f，以完全格式化的形式展示信息（展示全部信息）  一般，固定使用ps -ef列出全部进程的全部信息。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004121104.png">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004124044.png">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004124856.png">
+<meta property="article:published_time" content="2023-10-04T03:59:37.000Z">
+<meta property="article:modified_time" content="2023-10-04T04:55:25.501Z">
+<meta property="article:author" content="Bill Cai">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004121104.png">
+  
+    <link rel="alternate" href="/atom.xml" title="My World" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My World</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://bill-cai.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-06-Linux进程管理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2023-10-04T03:59:37.000Z" itemprop="datePublished">2023-10-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      06-Linux进程管理
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>程序运行在操作系统中时，是被操作系统所管理的。</p>
+<p>为管理运行的程序，每个程序在运行时都会在操作系统中注册为系统中的一个<strong>进程</strong>。</p>
+<p>并且，操作系统会给每个进程分配一个<strong>独有</strong>的<strong>进程号</strong>（进程ID）。</p>
+<h2 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h2><p>通过<code>ps</code>命令查看Linux系统中的进程信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps [-e -f]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-e</code>，显示出全部的进程</li>
+<li><code>-f</code>，以完全格式化的形式展示信息（展示全部信息）</li>
+</ul>
+<p>一般，固定使用<code>ps -ef</code>列出全部进程的全部信息。</p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004121104.png" alt="查看进程信息"></p>
+<h2 id="关闭进程"><a href="#关闭进程" class="headerlink" title="关闭进程"></a>关闭进程</h2><p>在Linux中，通过<code>kill</code>命令关闭进程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> [-9] 进程ID</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-9</code>，表示强制关闭进程。如果不使用该选项，则会向该进程发送关闭信息，能否成功关闭需要看进程自身的处理机制。</li>
+</ul>
+<h2 id="主机状态"><a href="#主机状态" class="headerlink" title="主机状态"></a>主机状态</h2><p>可以通过<code>top</code>命令查看CPU、内存使用情况，类似于Windows的任务管理器。</p>
+<ul>
+<li>默认每5秒刷新一次。</li>
+<li>通过<code>q</code>或<code>ctrl+C</code>退出。</li>
+</ul>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004124044.png" alt="top命令查看主机状态"></p>
+<p><code>top</code>命令支持选项：</p>
+<ul>
+<li><code>-p</code>，只显示某个进程信息</li>
+<li><code>-d</code>，设置刷新时间，默认5秒</li>
+<li><code>-c</code>，显示产生进程的完整命令，默认是进程名</li>
+<li><code>-n</code>，指定刷新次数</li>
+<li><code>-b</code>，以批次的非交互非全屏模式运行。一般配合<code>-n</code>指定输出次数并将输出重定向到指定文件，如<code>top -b -n 3 &gt; /tmp/top.info</code></li>
+<li><code>-i</code>，不显示任何闲置（idle）或无用（zombie）进程</li>
+<li><code>-u</code>，查找特定用户启动的进程</li>
+</ul>
+<p><code>top</code>命令交互运行状态下，可以使用<code>H</code>（显示帮助画面）、<code>C</code>（显示完整命令）等按键实现功能。</p>
+<h2 id="磁盘信息"><a href="#磁盘信息" class="headerlink" title="磁盘信息"></a>磁盘信息</h2><p>通过<code>df</code>命令查看硬盘的使用情况。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> [-h]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004124856.png" alt="df -h"></p>
+<p>通过<code>iostat</code>查看CPU、磁盘的相关信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iostat [-x] [num1] [num2]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-x</code>，显示更多信息</li>
+<li>参数<code>num1</code>表示刷新间隔，参数<code>num2</code>表示刷新次数</li>
+</ul>
+<h2 id="网络状态"><a href="#网络状态" class="headerlink" title="网络状态"></a>网络状态</h2><p>通过<code>sar</code>查看网络的相关信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -n DEV num1 num2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-n</code>，查看网络，<code>DEV</code>表示网络接口</li>
+<li>参数<code>num1</code>表示刷新间隔，参数<code>num2</code>表示刷新次数</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnbaomg60005akul0k72d08b" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Linux环境变量
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">05-Linux网络</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">06-Linux进程管理</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/">05-Linux网络</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/">Linux IP和主机名</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/">Linux其他命令</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Bill Cai<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
