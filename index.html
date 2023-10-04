@@ -127,7 +127,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="clnbasme2000insulaw58gii9" data-title="Linux环境变量" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="clnbcmq62000kngul1jve1pmb" data-title="Linux环境变量" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -220,7 +220,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnbasmdy0008nsul0sneewtu" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnbcmq5x0008nguleo2jhg2m" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -301,7 +301,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnbasmdw0005nsulcc92fmdl" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnbcmq5t0003ngulf0xvdefc" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -372,7 +372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clnbasme1000fnsul985b6ssn" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clnbcmq5y000angulem56dkkj" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -445,11 +445,47 @@
 
 <p>ntpd服务启动后会定期联网校准系统时间。</p>
 <p>也可以手动校准：<code>ntpdate -u ntp.aliyun.com</code></p>
+<h2 id="压缩解压缩命令"><a href="#压缩解压缩命令" class="headerlink" title="压缩解压缩命令"></a>压缩解压缩命令</h2><p>Linux常用压缩格式：</p>
+<ul>
+<li><code>tar</code>格式，归档文件，简单讲文件整合到一个文件内，无压缩效果</li>
+<li><code>gzip</code>格式，gzip文件，不仅能整合到一个文件，同时有压缩体积的效果</li>
+</ul>
+<h3 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar [-z -x -v -c -f -C] 参数...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-c</code>，创建压缩文件</li>
+<li><code>-v</code>，查看压缩、解压缩过程</li>
+<li><code>-x</code>，解压模式</li>
+<li><code>-f</code>，指定压缩、解压缩文件</li>
+<li><code>-z</code>，gzip模式</li>
+<li><code>-C</code>，指定解压路径</li>
+</ul>
+<p><code>-z</code>在开头使用，<code>-f</code>在结尾使用，<code>-C</code>单独使用</p>
+<h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zip [-r] 参数...</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-r</code>，压缩文件夹</li>
+</ul>
+<h3 id="unzip"><a href="#unzip" class="headerlink" title="unzip"></a>unzip</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip [-d] 参数</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-d</code>，指定要压缩的目录</li>
+</ul>
+<h2 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h2><p><code>scp</code>是<code>cp</code>命令的升级版，即<code>ssh cp</code>。</p>
+<p>通过SSH协议完成不同Linux服务器之间文件的传输。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp [-r] 参数1 参数2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-r</code>用于传输文件夹</li>
+<li>参数1，表示本机路径或远程目标路径</li>
+<li>参数2，表示远程目标路径或本机路径</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将本机testdir文件夹传输到node1的/tmp/下</span></span><br><span class="line">scp -r testdir root@node1:/tmp/</span><br><span class="line"><span class="comment"># 将node1的/tmp/testdir文件夹传输到本机/tmp/下</span></span><br><span class="line">scp -r root@node1:/tmp/testdir /tmp/</span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/" data-id="clnbasme0000dnsul1a92ci09" data-title="Linux其他命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/" data-id="clnbcmq61000hngul2iwzcv6h" data-title="Linux其他命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
