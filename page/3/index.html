@@ -73,6 +73,205 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-02-Linux基本命令" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time class="dt-published" datetime="2023-10-03T09:38:21.000Z" itemprop="datePublished">2023-10-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">02 Linux基本命令【Linux再学|黑马】</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h2><p>相对路径：以根目录为起点，描述路径的方式，路径以<code>/</code>开头。</p>
+<p>相对路径：以当前目录为起点，描述路径的方式，路径不需要<code>/</code>开头。</p>
+<p>特殊路径符：</p>
+<ul>
+<li>当前目录：<code>.</code>。<ul>
+<li>如，<code>cd .</code>或<code>cd ./Desktop</code></li>
+</ul>
+</li>
+<li>上一级目录：<code>..</code>。<ul>
+<li>如，<code>cd ..</code>或<code>cd ../..</code></li>
+</ul>
+</li>
+<li>用户的HOME目录：<code>~</code>。<ul>
+<li>如，<code>cd ~</code>或<code>cd ~/Desktop</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Linux文件相关命令"><a href="#Linux文件相关命令" class="headerlink" title="Linux文件相关命令"></a>Linux文件相关命令</h2><p><strong>学习Linux，本质是学习在命令行下熟练使用Linux的各类命令。</strong></p>
+<p>命令行：Linux终端（Terminal），是一种命令提示符页面。以纯字符的形式操作系统，可以使用各种字符画命令对系统发出操作指令。</p>
+<p>命令：Linux程序。命令没有图形化界面，可以在命令行（终端）中提供字符化的反馈。</p>
+<ul>
+<li><strong>命令的本体是二进制可执行程序</strong>，和Windows系统中的<code>.exe</code>文件类似；执行一个命令，实质上是运行一个二进制可执行程序。</li>
+</ul>
+<p>命令的通用格式：<code>command [-options] [parameter]</code></p>
+<h3 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h3><p>命令行中平铺展示当前目录（默认为HOME目录）下的文件或文件夹。</p>
+<ul>
+<li>HOME目录：每个用户在Linux系统的专属目录（以<code>~</code>表示），普通用户默认为<code>/home/&lt;username&gt;</code>，超级用户为<code>/root</code></li>
+<li>当前工作目录：Linux命令行在执行命令的时候，需要一个工作目录。命令行默认设置的工作目录是用户的HOME目录。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> [-a -l -h] [Linux路径]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-a</code>：列出全部文件（包括隐藏文件&#x2F;文件夹，以<code>.</code>开头的文件）</li>
+<li><code>-l</code>：以列表（竖向排列）形式展示文件&#x2F;文件夹</li>
+<li><code>-h</code>：和<code>-l</code>选项合用，合理显示文件大小单位</li>
+</ul>
+<p>命令选项可以组合使用，如：<code>ls -alh</code></p>
+<h3 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h3><p>更改当前目录。</p>
+<p>cd：<strong>c</strong>hange <strong>d</strong>irectory</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> [Linux路径]</span><br></pre></td></tr></table></figure>
+
+<p>无选项。</p>
+<p>不写参数，则回到用户的HOME目录；写参数，则转到对应的目录下。</p>
+<h3 id="pwd"><a href="#pwd" class="headerlink" title="pwd"></a>pwd</h3><p>查看当前工作目录</p>
+<p>pwd：<strong>p</strong>rint <strong>w</strong>ork <strong>d</strong>irectory</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br></pre></td></tr></table></figure>
+
+<p>无选项，无参数。</p>
+<h3 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h3><p>创建新的目录（文件夹）</p>
+<p>mkdir：make directory</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> [-p] Linux路径</span><br></pre></td></tr></table></figure>
+
+<p>参数必填（即要创建的文件夹路径），可以是相对路径或绝对路径</p>
+<p><code>-p</code>表示自动创建不存在的父目录，适用于创建连续多层级的目录。</p>
+<h3 id="touch"><a href="#touch" class="headerlink" title="touch"></a>touch</h3><p>创建文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> Linux路径</span><br></pre></td></tr></table></figure>
+
+<p>无选项，参数必填，表示要创建的文件路径。</p>
+<h3 id="cat"><a href="#cat" class="headerlink" title="cat"></a>cat</h3><p>查看文件内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> Linux路径</span><br></pre></td></tr></table></figure>
+
+<p>无选项，参数必填。</p>
+<h3 id="more"><a href="#more" class="headerlink" title="more"></a>more</h3><p><code>cat</code>直接将文件内容全部显示出来。</p>
+<p><code>more</code>支持翻页查看，文件内容过多时，可以一页一页展示。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">more Linux路径</span><br></pre></td></tr></table></figure>
+
+<p>无选项，参数必填。</p>
+<p>查看过程中，使用<strong>空格键</strong>翻页；通过<code>q</code>退出查看。</p>
+<h3 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h3><p>复制文件或文件夹.</p>
+<p>cp：<strong>c</strong>o<strong>p</strong>y</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> [-r] 参数1 参数2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-r</code>，可选，用于递归复制文件夹</li>
+<li>参数1，表示被复制的路径</li>
+<li>参数2，表示复制到的路径</li>
+</ul>
+<h3 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h3><p>移动文件或文件夹。</p>
+<p>mv：<strong>m</strong>o<strong>v</strong>e</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> 参数1 参数2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数1，表示被移动的路径</li>
+<li>参数2，表示移动到的路径；如果目标不存在，则进行<strong>改名</strong></li>
+</ul>
+<h3 id="rm"><a href="#rm" class="headerlink" title="rm"></a>rm</h3><p>移除文件夹。</p>
+<p>rm：<strong>r</strong>emo<strong>v</strong>e</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> [-r -f] 参数1 参数2 ... 参数N</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-r</code>，表示递归删除文件夹</li>
+<li><code>-f</code>，表示强制删除（不提示，一般用于root用户）</li>
+<li>参数，为被删除文件路径，支持多个（空格相隔），支持通配符<code>*</code>做模糊匹配</li>
+</ul>
+<h2 id="Linux查找命令"><a href="#Linux查找命令" class="headerlink" title="Linux查找命令"></a>Linux查找命令</h2><h3 id="which"><a href="#which" class="headerlink" title="which"></a>which</h3><p>通过<code>which</code>命令，可以查看其他命令的程序文件存放路径。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> 命令</span><br></pre></td></tr></table></figure>
+
+<h3 id="find"><a href="#find" class="headerlink" title="find"></a>find</h3><p>通过<code>find</code>命令可以搜索指定的文件。</p>
+<h4 id="以文件名搜索"><a href="#以文件名搜索" class="headerlink" title="以文件名搜索"></a>以文件名搜索</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 起始路径 -name <span class="string">&quot;被查找文件名&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>支持使用通配符<code>*</code>做模糊查询：</p>
+<ul>
+<li><code>test*</code>，表示以<code>test</code>开头的内容</li>
+<li><code>*test</code>，表示以<code>test</code>结尾的内容</li>
+<li><code>*test*</code>，表示包含<code>test</code>的内容</li>
+</ul>
+<h4 id="以文件大小搜索"><a href="#以文件大小搜索" class="headerlink" title="以文件大小搜索"></a>以文件大小搜索</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find 其实路径 -size +|-n[kMG]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>+</code>、<code>-</code>表示大于和小于</li>
+<li><code>n</code>表示大小数字</li>
+<li><code>kMG</code>表示文件大小单位分别为kB、MB、GB</li>
+</ul>
+<p>例如，<code>find / -size +100M</code>，为搜索根路径下大小在100MB以上的文件。</p>
+<h2 id="Linux管道命令"><a href="#Linux管道命令" class="headerlink" title="Linux管道命令"></a>Linux管道命令</h2><h3 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h3><p>从文件中通过关键字过滤文件行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep [-n] 关键字 文件路径</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-n</code>，可选，表示在结果中显示匹配行的<strong>行号</strong>。</li>
+<li>关键字，必填，表示过滤的字符，带有空格或其他特殊符号需要用<code>&quot; &quot;</code>将关键字整体引起来。</li>
+<li>文件路径，必填，表示被过滤文件路径，可以作为<strong>内容输入端口</strong>。</li>
+</ul>
+<h3 id="wc"><a href="#wc" class="headerlink" title="wc"></a>wc</h3><p>统计文件的行数、字符数等信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wc</span> [-c -m -l -w] 文件路径</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-c</code>，统计字节数</li>
+<li><code>-m</code>，统计字符数</li>
+<li><code>-l</code>，统计行数</li>
+<li><code>-w</code>，统计单词数</li>
+<li>文件路径，必填，表示被统计的文件，可以作为<strong>内容输入端口</strong></li>
+</ul>
+<h3 id="管道符"><a href="#管道符" class="headerlink" title="管道符"></a>管道符</h3><p>管道符：<code>|</code></p>
+<p>表示将左侧的命令结果作为右侧命令的输入。</p>
+<p>例如：</p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003203212.png" alt="管道符使用示例"></p>
+<h2 id="Linux重定向命令"><a href="#Linux重定向命令" class="headerlink" title="Linux重定向命令"></a>Linux重定向命令</h2><h3 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h3><p>使用<code>echo</code>命令在命令行内输出指定的内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 输出的内容</span><br></pre></td></tr></table></figure>
+
+<p>无选项，参数为需要输出的内容，复杂内容可以使用<code>&quot; &quot;</code>引起来。</p>
+<p>可以使用<strong>反引号</strong>&#x2F;<strong>飘号</strong>（ ` ）引住命令，则命令会被执行，且输出会被作为echo输出的内容。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> Hello world!</span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Hello world!&quot;</span></span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> `<span class="built_in">ls</span>`</span><br><span class="line">a.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="重定向符"><a href="#重定向符" class="headerlink" title="重定向符"></a>重定向符</h3><p><code>&gt;</code>：将左侧命令的结果，<strong>覆盖</strong>写到右侧指定的文件中。</p>
+<p><code>&gt;&gt;</code>：将左侧命令的结果，<strong>追加</strong>写到右侧指定的文件中。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">abc kka</span><br><span class="line">ae12k</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Hello world!&quot;</span> &gt; a.txt</span><br><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">Hello world!</span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&quot;Bye.&quot;</span> &gt;&gt; a.txt</span><br><span class="line">$ <span class="built_in">cat</span> a.txt</span><br><span class="line">Hello world!</span><br><span class="line">Bye.</span><br></pre></td></tr></table></figure>
+
+<h3 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h3><p>查看文件尾部内容，跟踪文件的最新更改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">tail</span> [-f -&lt;num&gt;] Linux路径</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-f</code>，表示持续跟踪；<code>ctrl+C</code>退出</li>
+<li><code>-num</code>，表示查看尾部行数，默认为10行（相当于<code>-10</code>）</li>
+<li>参数，必填，表示被跟踪的文件路径</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/03/02-Linux%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/" data-id="clnd77qrk0000mgul2a3xbl4h" data-title="02 Linux基本命令【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Windows上的Linux子系统：WSL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/" class="article-date">
@@ -116,7 +315,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/" data-id="clnbcpre8000t5sul8zx68xl3" data-title="Windows上的Linux子系统：WSL" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/" data-id="clnd77qs8000umgul2vfh1mus" data-title="Windows上的Linux子系统：WSL" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -192,7 +391,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/03/01%20Linux%E5%9F%BA%E7%A1%80/" data-id="clnbcprdp00005sul4vfa4a98" data-title="01 Linux基础【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/03/01%20Linux%E5%9F%BA%E7%A1%80/" data-id="clnd77qrw0004mguld17f3v1a" data-title="01 Linux基础【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -259,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" data-id="clnbcpre4000h5sulaopqb0in" data-title="DBSCAN - 原理和实现" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" data-id="clnd77qrz0008mgul1zq9dkvj" data-title="DBSCAN - 原理和实现" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -313,79 +512,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/26/hello-world/" data-id="clnbcpre9000v5sul9indae0m" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-基于Hexo搭建个人博客" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" class="article-date">
-  <time class="dt-published" datetime="2023-09-26T07:13:57.000Z" itemprop="datePublished">2023-09-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">个人博客搭建 - 基于Hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="搭建思路"><a href="#搭建思路" class="headerlink" title="搭建思路"></a>搭建思路</h2><ol>
-<li>安装Hexo<ol>
-<li>安装node.js环境（node，npm）</li>
-<li>局部安装Hexo：<code>npm install hexo</code></li>
-</ol>
-</li>
-<li>新建blog文件夹，并cd到blog文件夹下</li>
-<li>通过<code>npx hexo init</code>初始化</li>
-<li>本地启动hexo服务：<code>npx hexo server</code>或者简写为<code>npx hexo s</code></li>
-<li>访问默认的<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a>网页查看</li>
-</ol>
-<h2 id="新建博客"><a href="#新建博客" class="headerlink" title="新建博客"></a>新建博客</h2><ol>
-<li>创建md文件：<code>npx hexo n &quot;blog-file-name&quot;</code></li>
-<li>删除hexo生成的所有文档（其实就是清理public文件夹）：<code>npx hexo clean</code></li>
-<li>重新生成页面文档：<code>npx hexo g</code></li>
-<li>启动服务，访问博客网页</li>
-</ol>
-<h2 id="网页部署"><a href="#网页部署" class="headerlink" title="网页部署"></a>网页部署</h2><ol>
-<li><p>注册GitHub账号，创建代码仓库，要求仓库名为<code>&lt;username&gt;.github.io</code>，因为GitHub Page解析的时候是找的这个名称</p>
-</li>
-<li><p>安装Hexo依赖：<code>npm install --save hexo-deployer-git</code></p>
-</li>
-<li><p>修改配置文件<code>_config.yml</code>，在最下方的<code>deploy</code>部分添加git配置</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:Bill-Cai/Bill-Cai.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署（上传至GitHub）：<code>npx hexo d</code></p>
-</li>
-</ol>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av44544186">手把手教你从0开始搭建自己的个人博客 |无坑版视频教程| hexo_哔哩哔哩_bilibili</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145777879">hexo博客系统的实现原理与搭建 | 知乎</a></p>
-<p><a target="_blank" rel="noopener" href="https://goldstine.github.io/create_blog_with_github_pages/">可能是最全面的github pages搭建个人博客教程 – goldstine’s blog – 个人技术公众号：Goldstine 分享编程资源 | 学习路线</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Night__breeze/article/details/122389128">详解Hexo搭建博客的底层原理_hexo 源码解析-CSDN博客</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-id="clnbcprea000x5sul8ndh1v8a" data-title="个人博客搭建 - 基于Hexo" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/26/hello-world/" data-id="clnd77qs7000rmgul9lytcrf9" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -403,7 +530,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -449,6 +576,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
           </li>
         
@@ -462,10 +593,6 @@
         
           <li>
             <a href="/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/">Linux IP和主机名</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/">Linux其他命令</a>
           </li>
         
       </ul>

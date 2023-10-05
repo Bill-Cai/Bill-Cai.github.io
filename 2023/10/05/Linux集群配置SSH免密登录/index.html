@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK） | My World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="问题背景在学习大数据和高性能计算时，需要搭建Hadoop集群环境。 Hadoop集群采取中心化模式的分布式框架，即采用一个中心节点（服务器）统筹其他服务器的工作模式。 网上教程大多采用多台虚拟机或多台云服务器进行搭建，可以参考2023新版黑马程序员大数据入门到实战教程，大数据开发必会的Hadoop、Hive，云平台实战项目全套一网打尽_哔哩哔哩_bilibili。 如果使用虚拟机，基本的配置步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）">
+<meta property="og:url" content="http://bill-cai.github.io/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/index.html">
+<meta property="og:site_name" content="My World">
+<meta property="og:description" content="问题背景在学习大数据和高性能计算时，需要搭建Hadoop集群环境。 Hadoop集群采取中心化模式的分布式框架，即采用一个中心节点（服务器）统筹其他服务器的工作模式。 网上教程大多采用多台虚拟机或多台云服务器进行搭建，可以参考2023新版黑马程序员大数据入门到实战教程，大数据开发必会的Hadoop、Hive，云平台实战项目全套一网打尽_哔哩哔哩_bilibili。 如果使用虚拟机，基本的配置步">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005201837.png">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005202349.png">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005211002.png">
+<meta property="article:published_time" content="2023-10-05T11:48:51.000Z">
+<meta property="article:modified_time" content="2023-10-05T13:13:25.897Z">
+<meta property="article:author" content="Bill Cai">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005201837.png">
+  
+    <link rel="alternate" href="/atom.xml" title="My World" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My World</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://bill-cai.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Linux集群配置SSH免密登录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-date">
+  <time class="dt-published" datetime="2023-10-05T11:48:51.000Z" itemprop="datePublished">2023-10-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>在学习大数据和高性能计算时，需要搭建Hadoop集群环境。</p>
+<p>Hadoop集群采取中心化模式的分布式框架，即采用一个中心节点（服务器）统筹其他服务器的工作模式。</p>
+<p>网上教程大多采用多台虚拟机或多台云服务器进行搭建，可以参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1WY4y197g7">2023新版黑马程序员大数据入门到实战教程，大数据开发必会的Hadoop、Hive，云平台实战项目全套一网打尽_哔哩哔哩_bilibili</a>。</p>
+<p>如果使用虚拟机，基本的配置步骤较多，大概为：</p>
+<ol>
+<li>配置固定IP地址</li>
+<li>配置主机名映射</li>
+<li>配置SSH免密登录</li>
+<li>创建普通用户并配置SSH免密登录</li>
+<li>关闭防火墙、SELinux</li>
+<li>时间同步</li>
+<li>快照保存</li>
+</ol>
+<p>使用云服务器（以阿里云ECS为例），基本的配置步骤有：</p>
+<ol>
+<li>配置主机名映射</li>
+<li>配置SSH免密登录</li>
+<li>创建普通用户并配置SSH免密登录</li>
+</ol>
+<p>固定IP、同步时间、防火墙等在云服务器中不需要进行配置，就比较简洁。</p>
+<p>运行虚拟机需要较高的计算机性能，多台云服务器又有点费钱；故，尝试采用<a target="_blank" rel="noopener" href="https://www.aliyun.com/product/kubernetes">阿里云容器服务Kubernetes版（ACK）</a>，基于多个容器构建Hadoop集群。</p>
+<p>以容器进行集群搭建，和基于云服务器的步骤差不多。</p>
+<p>本文主要介绍ACK容器部署和容器的基本配置。重点说明基于<strong>ubuntu:22.04</strong>镜像运行的容器如何配置<strong>主机名映射</strong>和<strong>SSH免密登录</strong>，为后续安装Hadoop做准备。</p>
+<h2 id="环境基本介绍"><a href="#环境基本介绍" class="headerlink" title="环境基本介绍"></a>环境基本介绍</h2><p>基于镜像<code>ubuntu:22.04</code>运行3个容器，开放<code>22</code>端口作为SSH的默认端口。</p>
+<ul>
+<li>当然也可以在服务中配置不同的端口映射，这里为了简单直接将外部<code>22</code>端口映射容器<code>22</code>端口</li>
+<li>否则，在容器内用SSH连接其他容器时需要使用<code>-p &lt;port&gt;</code>，例如，<code>ssh-copy-id -p &lt;port&gt; node1</code></li>
+</ul>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005201837.png" alt="使用镜像创建应用"></p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005202349.png" alt="创建端口映射"></p>
+<p>容器的IP地址和端口即是容器服务的外部端点。</p>
+<h2 id="配置过程"><a href="#配置过程" class="headerlink" title="配置过程"></a>配置过程</h2><h3 id="1-安装基本应用"><a href="#1-安装基本应用" class="headerlink" title="1 安装基本应用"></a>1 安装基本应用</h3><p>这里的每个容器都相当于一台独立的Linux服务器，先给每个容器安装基本的应用（因为ubuntu基本啥都没有），包括Vim编辑器、openssh-server（SSH连接）、inetutils-ping（测试能否<code>ping</code>通）。</p>
+<ul>
+<li>这里外部暂时无法连接容器，需要在阿里云的工作台开启容器终端进行操作。</li>
+<li>后续操作没有特别说明，默认是<strong>对每个容器进行相同的操作</strong>（虽然后面安装Hadoop时节点分主从，但是本文中的操作，三个节点是等同的）。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install -y vim</span><br><span class="line">apt-get install -y openssh-server</span><br><span class="line">apt-get install -y inetutils-ping</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-设置root密码"><a href="#2-设置root密码" class="headerlink" title="2 设置root密码"></a>2 设置root密码</h3><p>通过</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+
+<p>设置root密码（相当于虚拟机或云服务器的登录密码），建议保持一致，免得忘记。</p>
+<h3 id="3-配置主机名映射"><a href="#3-配置主机名映射" class="headerlink" title="3 配置主机名映射"></a>3 配置主机名映射</h3><p>这里，需要稍微了解一点主机IP和域名解析的知识：<a href="/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" title="Linux IP和主机名">Linux IP和主机名</a></p>
+<p>Linux操作系统解析主机名的文件一般在<code>/etc/hosts</code>，故编辑该文件（<code>vim /etc/hosts</code>），在其末尾加上：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">xxx.xxx.xxx.xx1    ubuntu-node1-xxx-xxx    node1</span><br><span class="line">xxx.xxx.xxx.xx2    ubuntu-node2-xxx-xxx    node2</span><br><span class="line">xxx.xxx.xxx.xx3    ubuntu-node3-xxx-xxx    node3</span><br></pre></td></tr></table></figure>
+
+<p>这里第一列为三个容器的IP地址，第二列为容器名（主机名），第三列为主机名缩写（自定义）。中间用制表符分隔。</p>
+<ul>
+<li>这里相当于把3个IP和主机名做了个映射，这样Linux操作系统才能识别出<code>node1</code>的IP是<code>xxx.xxx.xxx.xx1</code>。</li>
+</ul>
+<p>更改完成后，检查一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<p>不要出问题。</p>
+<h3 id="配置SSH免密登录"><a href="#配置SSH免密登录" class="headerlink" title="配置SSH免密登录"></a>配置SSH免密登录</h3><p>修改SSH的配置文件<code>/etc/ssh/sshd_config</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>更改以下配置（可以在配置文件的末尾直接增加以下内容）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PermitRootLogin <span class="built_in">yes</span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span></span><br><span class="line">PasswordAuthentication <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+
+<p>做一些说明：</p>
+<ul>
+<li><code>PermitRootLogin yes</code>，是允许<strong>远程</strong>以<strong>root用户</strong>进行登录</li>
+<li><code>PubkeyAuthentication yes</code>，是允许使用<strong>公钥</strong>进行登录</li>
+<li><code>PasswordAuthentication yes</code>，是允许使用<strong>密码</strong>进行登录（后期可以禁用，改为<code>PasswordAuthentication no</code>）</li>
+<li>（也可以增加<code>RSAAuthentication yes</code>配置，允许RSA认证。虽然影响不大，好像这东西已经被弃用了。）</li>
+</ul>
+<p>检查配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>重启SSH服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service ssh restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="实现相互SSH免密登录"><a href="#实现相互SSH免密登录" class="headerlink" title="实现相互SSH免密登录"></a>实现相互SSH免密登录</h3><p>在每个容器内，<strong>生成密钥对</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<p>生成过程中直接回车（默认路径、不使用密码验证），生成的密钥对（即，公钥<code>id_rsa.pub</code>和私钥<code>id_rsa</code>）存放在默认路径<code>~/.ssh</code>下。</p>
+<p><strong>将每个容器的公钥复制给所有容器（包括自身）</strong></p>
+<ul>
+<li>因为自身的公钥也需要注册到<code>~/.ssh/authorized_keys</code>文件中，才能SSH访问自身</li>
+<li>复制需要输入<strong>目标容器</strong>的密码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id node1</span><br><span class="line">ssh-copy-id node2</span><br><span class="line">ssh-copy-id node3</span><br></pre></td></tr></table></figure>
+
+<p>直接使用SSH连接容器</p>
+<ul>
+<li>第一次连接需要输入<code>yes</code>确认凭证，可能需要输入密码（不确定，我试的时候一开始免密设置没成功所以需要密码）。</li>
+<li>这里第一次连接，会在<code>~/.ssh</code>文件夹下生成<code>known_hosts</code>文件，保存已知的连接主机。</li>
+<li>后续，直接<code>ssh</code>就不需要密码了！！！</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh node1</span><br><span class="line">ssh node2</span><br><span class="line">ssh node3</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005211002.png" alt="配一张成功的图"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010993514/article/details/82083027">Linux系统配置SSH免密登录(多主机互通)_.ssh 地下没有 au-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9dbb1dea5929">记一次ssh免密登录踩坑and Debug之路</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/810262">Linux: SSH免密登录配置完了不生效-阿里云开发者社区</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhangmingcai/article/details/95734889">ssh免密登陆失败原因总结(Linux)_ssh免密不成功-CSDN博客</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnd77qs5000nmgulbeaq562d" data-title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Linux环境变量</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">06-Linux进程管理</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/">05-Linux网络</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/">Linux IP和主机名</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Bill Cai<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
