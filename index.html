@@ -73,6 +73,92 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Linux集群配置hadoop用户SSH免密登录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-date">
+  <time class="dt-published" datetime="2023-10-06T07:13:49.000Z" itemprop="datePublished">2023-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置hadoop用户SSH免密登录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="配置hadoop用户SSH免密登录"><a href="#配置hadoop用户SSH免密登录" class="headerlink" title="配置hadoop用户SSH免密登录"></a>配置hadoop用户SSH免密登录</h2><p>上一篇<a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>记录了Linux集群间<strong>root用户</strong>怎么配置SSH免密互相登录。</p>
+<p>本文记录hadoop用户（<strong>普通用户</strong>）配置SSH免密互相登录的过程。原理基本相同。</p>
+<p>以下操作没有特别说明，即在集群<strong>所有Linux系统</strong>上进行的操作。</p>
+<h3 id="添加普通用户"><a href="#添加普通用户" class="headerlink" title="添加普通用户"></a>添加普通用户</h3><p>使用root用户登录，通过<code>useradd</code>添加普通用户</p>
+<ul>
+<li><code>-m</code>，表示自动生成用户目录，即<code>/home/&lt;username&gt;</code></li>
+<li><code>-s</code>，用于指定用户的终端程序（默认是sh终端，很垃圾，建议换成bash）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -m -s /bin/bash hadoop</span><br></pre></td></tr></table></figure>
+
+<p>这里建议所有机子上的用户名称一致（后面<code>ssh &lt;host&gt;</code>的操作就会很丝滑），不然就得使用<code>ssh &lt;username&gt;@&lt;host&gt;</code>或者再去配置用户名映射。</p>
+<p>设置用户密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd hadoop</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改SSH配置"><a href="#修改SSH配置" class="headerlink" title="修改SSH配置"></a>修改SSH配置</h3><p>通过<code>vim /etc/ssh/sshd_config</code>命令修改SSH配置文件，找到并更改以下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UsePAM no</span><br></pre></td></tr></table></figure>
+
+<p>这是为了避免在Docker容器中使用SSH进行普通用户登录时，出现登录后链接马上断开的问题（<code>Connection to &lt;host&gt; closed</code>）。</p>
+<p>重启SSH服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service ssh restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="普通用户配置"><a href="#普通用户配置" class="headerlink" title="普通用户配置"></a>普通用户配置</h3><p>切换到hadoop用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su - hadoop</span><br></pre></td></tr></table></figure>
+
+<p>生成SSH密钥对</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<p>分配公钥（具体说明见<a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id hadoop@node1</span><br><span class="line">ssh-copy-id hadoop@node2</span><br><span class="line">ssh-copy-id hadoop@node3</span><br></pre></td></tr></table></figure>
+
+<p>查看<code>~/.ssh/authorized_keys</code>中是否已经添加了3台机子的rsa凭证。（如果没有，可以手动生成该文件并copy文件内容）</p>
+<p>可以通过<code>ssh</code>免密登录了：</p>
+<ul>
+<li>使用<code>ssh hadoop@node1</code></li>
+<li>也可以直接<code>ssh node1</code>，因为用户名一致</li>
+</ul>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231006154335.png" alt="配一张成功的图"></p>
+<h2 id="总结经验"><a href="#总结经验" class="headerlink" title="总结经验"></a>总结经验</h2><p>主要就是两方面的配置：SSH配置文件的更改，密钥的正确使用。</p>
+<ul>
+<li>配置文件需要保证：允许root用户登录，允许公钥登录，禁用<code>UsePAM</code></li>
+<li>每台机子都要有其他各台机子的公钥，并加入<code>~/.ssh/authorized_keys</code>认证才能免密登录其他各台机子</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43790540/article/details/104848610">阿里云Ubuntu下创建新用户并且配置bash_阿里云服务器 ubuntu 添加新用户-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_30872867/article/details/96985340#:~:text=%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%E5%A6%82%E4%B8%8B%EF%BC%9Asudo%20ssh-keygen%20-t%20dsa%20-f,%2Fetc%2Fssh%2Fssh_host_dsa_key%20%28%E4%B8%80%E7%9B%B4%E5%9B%9E%E8%BD%A6%29sudo%20ssh-keyg..._connection%20to%20closed">解决 Docker Hadoop ssh “Connection to * closed”.问题-CSDN博客</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnebe9ue000n4oul4l9g3cu7" data-title="Linux集群配置hadoop用户SSH免密登录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Linux集群配置SSH免密登录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-date">
@@ -181,6 +267,7 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id node1</span><br><span class="line">ssh-copy-id node2</span><br><span class="line">ssh-copy-id node3</span><br></pre></td></tr></table></figure>
 
+<p><strong>这里成功的依据是，<code>~/.ssh/authorized_keys</code>中已经添加了3台机子的rsa凭证。</strong></p>
 <p>直接使用SSH连接容器</p>
 <ul>
 <li>第一次连接需要输入<code>yes</code>确认凭证，可能需要输入密码（不确定，我试的时候一开始免密设置没成功所以需要密码）。</li>
@@ -198,10 +285,12 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnd77qs5000nmgulbeaq562d" data-title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnebe9uf000r4oulcrwv98vj" data-title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
     </footer>
   </div>
   
@@ -264,7 +353,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="clnd77qs4000kmgul14x45at4" data-title="Linux环境变量" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="clnebe9ud000k4oulb7s57ky5" data-title="Linux环境变量" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -359,7 +448,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnd77qrw0005mguld34x0k1m" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnebe9u900084oul717rdocd" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -440,78 +529,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnd77qs0000amgulf3bg94gy" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-IP和主机名" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" class="article-date">
-  <time class="dt-published" datetime="2023-10-04T02:22:14.000Z" itemprop="datePublished">2023-10-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/">Linux IP和主机名</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <meta name="referrer" content="no-referrer" />
-
-<h2 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h2><p>联网电脑都会有一个IP地址，用于和其他计算机进行通讯。</p>
-<p>IP地址的两个版本：<strong>IPv4</strong>，IPv6。</p>
-<p>IPv4的格式：<code>xxx.xxx.xxx.xxx</code>（<code>xxx</code>表示0~255的数字）</p>
-<p>通过<code>ifconfig</code>可以查看本机的IP地址</p>
-<ul>
-<li>可以通过<code>yum -y install net-tools</code>进行安装</li>
-</ul>
-<h3 id="特殊IP地址"><a href="#特殊IP地址" class="headerlink" title="特殊IP地址"></a>特殊IP地址</h3><p><code>127.0.0.1</code>，用于指代本机</p>
-<p><code>0.0.0.0</code>，用于指代本机，或在端口绑定中确定绑定关系，或在IP地址限制中表示允许任意IP访问。</p>
-<h2 id="主机名"><a href="#主机名" class="headerlink" title="主机名"></a>主机名</h2><p>每台电脑，除了IP地址外，还有一个主机名。</p>
-<p>查看主机名：<code>hostname</code></p>
-<p>主机名可以进行设置。</p>
-<p>修改主机名（需要root权限）：<code>hostnamectl set-hostname 主机名</code></p>
-<ul>
-<li>重新登录终端可以看到主机名修改成功。</li>
-</ul>
-<h2 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h2><p>IP地址难以记忆，可以通过字符化的地址去访问服务器，称之为<strong>域名</strong>。域名和IP之间的映射关系，通过<strong>域名解析</strong>实现。</p>
-<p>以<a target="_blank" rel="noopener" href="https://www.baidu.com/">百度</a>为例分析其访问流程：</p>
-<ul>
-<li>访问<code>www.baidu.com</code><ul>
-<li>检查本地是否有<code>www.baidu.com</code>的IP地址（Windows系统的<code>C:\Windows\System32\drivers\etc\hosts</code>文件；Linux系统的<code>/etc/hosts</code>文件）<ul>
-<li>有，则直接访问IP地址，打开网站</li>
-<li>否则，联网查询公开DNS服务器（如<code>114.114.114.114</code>，<code>8.8.8.8</code>等），查询是否有<code>www.baidu.com</code>的IP地址，获取后再访问</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004105108.png" alt="访问流程"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clnd77qs1000dmgulgbr75nid" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnebe9u700054oul3x292583" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -575,6 +593,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置hadoop用户SSH免密登录</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
           </li>
         
@@ -588,10 +610,6 @@
         
           <li>
             <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/">05-Linux网络</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/">Linux IP和主机名</a>
           </li>
         
       </ul>

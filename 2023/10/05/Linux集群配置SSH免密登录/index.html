@@ -17,8 +17,9 @@
 <meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005202349.png">
 <meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005211002.png">
 <meta property="article:published_time" content="2023-10-05T11:48:51.000Z">
-<meta property="article:modified_time" content="2023-10-05T13:13:25.897Z">
+<meta property="article:modified_time" content="2023-10-06T07:35:04.282Z">
 <meta property="article:author" content="Bill Cai">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231005201837.png">
   
@@ -187,6 +188,7 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id node1</span><br><span class="line">ssh-copy-id node2</span><br><span class="line">ssh-copy-id node3</span><br></pre></td></tr></table></figure>
 
+<p><strong>这里成功的依据是，<code>~/.ssh/authorized_keys</code>中已经添加了3台机子的rsa凭证。</strong></p>
 <p>直接使用SSH连接容器</p>
 <ul>
 <li>第一次连接需要输入<code>yes</code>确认凭证，可能需要输入密码（不确定，我试的时候一开始免密设置没成功所以需要密码）。</li>
@@ -204,15 +206,26 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnd77qs5000nmgulbeaq562d" data-title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnebe9uf000r4oulcrwv98vj" data-title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Linux集群配置hadoop用户SSH免密登录
+        
+      </div>
+    </a>
   
   
     <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" id="article-nav-older" class="article-nav-link-wrap">
@@ -269,6 +282,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置hadoop用户SSH免密登录</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
           </li>
         
@@ -282,10 +299,6 @@
         
           <li>
             <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/">05-Linux网络</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/">Linux IP和主机名</a>
           </li>
         
       </ul>

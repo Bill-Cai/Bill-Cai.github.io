@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Linux集群配置hadoop用户SSH免密登录 | My World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="配置hadoop用户SSH免密登录上一篇Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）记录了Linux集群间root用户怎么配置SSH免密互相登录。 本文记录hadoop用户（普通用户）配置SSH免密互相登录的过程。原理基本相同。 以下操作没有特别说明，即在集群所有Linux系统上进行的操作。 添加普通用户使用root用户登录，通过useradd添加普">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux集群配置hadoop用户SSH免密登录">
+<meta property="og:url" content="http://bill-cai.github.io/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/index.html">
+<meta property="og:site_name" content="My World">
+<meta property="og:description" content="配置hadoop用户SSH免密登录上一篇Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）记录了Linux集群间root用户怎么配置SSH免密互相登录。 本文记录hadoop用户（普通用户）配置SSH免密互相登录的过程。原理基本相同。 以下操作没有特别说明，即在集群所有Linux系统上进行的操作。 添加普通用户使用root用户登录，通过useradd添加普">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231006154335.png">
+<meta property="article:published_time" content="2023-10-06T07:13:49.000Z">
+<meta property="article:modified_time" content="2023-10-06T07:58:12.948Z">
+<meta property="article:author" content="Bill Cai">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231006154335.png">
+  
+    <link rel="alternate" href="/atom.xml" title="My World" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My World</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://bill-cai.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Linux集群配置hadoop用户SSH免密登录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="article-date">
+  <time class="dt-published" datetime="2023-10-06T07:13:49.000Z" itemprop="datePublished">2023-10-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Linux集群配置hadoop用户SSH免密登录
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="配置hadoop用户SSH免密登录"><a href="#配置hadoop用户SSH免密登录" class="headerlink" title="配置hadoop用户SSH免密登录"></a>配置hadoop用户SSH免密登录</h2><p>上一篇<a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>记录了Linux集群间<strong>root用户</strong>怎么配置SSH免密互相登录。</p>
+<p>本文记录hadoop用户（<strong>普通用户</strong>）配置SSH免密互相登录的过程。原理基本相同。</p>
+<p>以下操作没有特别说明，即在集群<strong>所有Linux系统</strong>上进行的操作。</p>
+<h3 id="添加普通用户"><a href="#添加普通用户" class="headerlink" title="添加普通用户"></a>添加普通用户</h3><p>使用root用户登录，通过<code>useradd</code>添加普通用户</p>
+<ul>
+<li><code>-m</code>，表示自动生成用户目录，即<code>/home/&lt;username&gt;</code></li>
+<li><code>-s</code>，用于指定用户的终端程序（默认是sh终端，很垃圾，建议换成bash）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -m -s /bin/bash hadoop</span><br></pre></td></tr></table></figure>
+
+<p>这里建议所有机子上的用户名称一致（后面<code>ssh &lt;host&gt;</code>的操作就会很丝滑），不然就得使用<code>ssh &lt;username&gt;@&lt;host&gt;</code>或者再去配置用户名映射。</p>
+<p>设置用户密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd hadoop</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改SSH配置"><a href="#修改SSH配置" class="headerlink" title="修改SSH配置"></a>修改SSH配置</h3><p>通过<code>vim /etc/ssh/sshd_config</code>命令修改SSH配置文件，找到并更改以下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UsePAM no</span><br></pre></td></tr></table></figure>
+
+<p>这是为了避免在Docker容器中使用SSH进行普通用户登录时，出现登录后链接马上断开的问题（<code>Connection to &lt;host&gt; closed</code>）。</p>
+<p>重启SSH服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service ssh restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="普通用户配置"><a href="#普通用户配置" class="headerlink" title="普通用户配置"></a>普通用户配置</h3><p>切换到hadoop用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su - hadoop</span><br></pre></td></tr></table></figure>
+
+<p>生成SSH密钥对</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+
+<p>分配公钥（具体说明见<a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id hadoop@node1</span><br><span class="line">ssh-copy-id hadoop@node2</span><br><span class="line">ssh-copy-id hadoop@node3</span><br></pre></td></tr></table></figure>
+
+<p>查看<code>~/.ssh/authorized_keys</code>中是否已经添加了3台机子的rsa凭证。（如果没有，可以手动生成该文件并copy文件内容）</p>
+<p>可以通过<code>ssh</code>免密登录了：</p>
+<ul>
+<li>使用<code>ssh hadoop@node1</code></li>
+<li>也可以直接<code>ssh node1</code>，因为用户名一致</li>
+</ul>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231006154335.png" alt="配一张成功的图"></p>
+<h2 id="总结经验"><a href="#总结经验" class="headerlink" title="总结经验"></a>总结经验</h2><p>主要就是两方面的配置：SSH配置文件的更改，密钥的正确使用。</p>
+<ul>
+<li>配置文件需要保证：允许root用户登录，允许公钥登录，禁用<code>UsePAM</code></li>
+<li>每台机子都要有其他各台机子的公钥，并加入<code>~/.ssh/authorized_keys</code>认证才能免密登录其他各台机子</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43790540/article/details/104848610">阿里云Ubuntu下创建新用户并且配置bash_阿里云服务器 ubuntu 添加新用户-CSDN博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_30872867/article/details/96985340#:~:text=%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%E5%A6%82%E4%B8%8B%EF%BC%9Asudo%20ssh-keygen%20-t%20dsa%20-f,%2Fetc%2Fssh%2Fssh_host_dsa_key%20%28%E4%B8%80%E7%9B%B4%E5%9B%9E%E8%BD%A6%29sudo%20ssh-keyg..._connection%20to%20closed">解决 Docker Hadoop ssh “Connection to * closed”.问题-CSDN博客</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnebe9ue000n4oul4l9g3cu7" data-title="Linux集群配置hadoop用户SSH免密登录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置hadoop用户SSH免密登录</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">06-Linux进程管理</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/">05-Linux网络</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Bill Cai<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
