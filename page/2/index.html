@@ -73,6 +73,101 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-06-Linux进程管理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="article-date">
+  <time class="dt-published" datetime="2023-10-04T03:59:37.000Z" itemprop="datePublished">2023-10-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">06-Linux进程管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>程序运行在操作系统中时，是被操作系统所管理的。</p>
+<p>为管理运行的程序，每个程序在运行时都会在操作系统中注册为系统中的一个<strong>进程</strong>。</p>
+<p>并且，操作系统会给每个进程分配一个<strong>独有</strong>的<strong>进程号</strong>（进程ID）。</p>
+<h2 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h2><p>通过<code>ps</code>命令查看Linux系统中的进程信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps [-e -f]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-e</code>，显示出全部的进程</li>
+<li><code>-f</code>，以完全格式化的形式展示信息（展示全部信息）</li>
+</ul>
+<p>一般，固定使用<code>ps -ef</code>列出全部进程的全部信息。</p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004121104.png" alt="查看进程信息"></p>
+<h2 id="关闭进程"><a href="#关闭进程" class="headerlink" title="关闭进程"></a>关闭进程</h2><p>在Linux中，通过<code>kill</code>命令关闭进程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> [-9] 进程ID</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-9</code>，表示强制关闭进程。如果不使用该选项，则会向该进程发送关闭信息，能否成功关闭需要看进程自身的处理机制。</li>
+</ul>
+<h2 id="主机状态"><a href="#主机状态" class="headerlink" title="主机状态"></a>主机状态</h2><p>可以通过<code>top</code>命令查看CPU、内存使用情况，类似于Windows的任务管理器。</p>
+<ul>
+<li>默认每5秒刷新一次。</li>
+<li>通过<code>q</code>或<code>ctrl+C</code>退出。</li>
+</ul>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004124044.png" alt="top命令查看主机状态"></p>
+<p><code>top</code>命令支持选项：</p>
+<ul>
+<li><code>-p</code>，只显示某个进程信息</li>
+<li><code>-d</code>，设置刷新时间，默认5秒</li>
+<li><code>-c</code>，显示产生进程的完整命令，默认是进程名</li>
+<li><code>-n</code>，指定刷新次数</li>
+<li><code>-b</code>，以批次的非交互非全屏模式运行。一般配合<code>-n</code>指定输出次数并将输出重定向到指定文件，如<code>top -b -n 3 &gt; /tmp/top.info</code></li>
+<li><code>-i</code>，不显示任何闲置（idle）或无用（zombie）进程</li>
+<li><code>-u</code>，查找特定用户启动的进程</li>
+</ul>
+<p><code>top</code>命令交互运行状态下，可以使用<code>H</code>（显示帮助画面）、<code>C</code>（显示完整命令）等按键实现功能。</p>
+<h2 id="磁盘信息"><a href="#磁盘信息" class="headerlink" title="磁盘信息"></a>磁盘信息</h2><p>通过<code>df</code>命令查看硬盘的使用情况。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> [-h]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231004124856.png" alt="df -h"></p>
+<p>通过<code>iostat</code>查看CPU、磁盘的相关信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iostat [-x] [num1] [num2]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-x</code>，显示更多信息</li>
+<li>参数<code>num1</code>表示刷新间隔，参数<code>num2</code>表示刷新次数</li>
+</ul>
+<h2 id="网络状态"><a href="#网络状态" class="headerlink" title="网络状态"></a>网络状态</h2><p>通过<code>sar</code>查看网络的相关信息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sar -n DEV num1 num2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-n</code>，查看网络，<code>DEV</code>表示网络接口</li>
+<li>参数<code>num1</code>表示刷新间隔，参数<code>num2</code>表示刷新次数</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnjr9kl10004ucul6ghcgkrg" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-05-Linux网络" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" class="article-date">
@@ -140,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clniyiy720003tculdee05dec" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnjr9kl40008uculc68u38u6" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -211,7 +306,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clniyiy79000ftculhuiba127" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clnjr9kl7000iucul0r5fd1nk" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -324,7 +419,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/" data-id="clniyiy7a000itcul87d0gdkd" data-title="Linux其他命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/" data-id="clnjr9kl6000fucul9tpzgzus" data-title="Linux其他命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -397,87 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" data-id="clniyiy7a000ktculak89aam6" data-title="Linux常用快捷键" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-04-Linux软件安装" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/10/04/04-Linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" class="article-date">
-  <time class="dt-published" datetime="2023-10-04T01:05:17.000Z" itemprop="datePublished">2023-10-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/10/04/04-Linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/">04-Linux软件安装【Linux再学|黑马】</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <meta name="referrer" content="no-referrer" />
-
-<h2 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h2><p>操作系统安装软件的方式：</p>
-<ul>
-<li>下载安装包自行安装：<ul>
-<li>Windows系统，<code>.exe</code>文件、<code>.msi</code>文件等</li>
-<li>Mac系统，<code>.dmg</code>文件、<code>.pkg</code>文件等</li>
-</ul>
-</li>
-<li>系统的应用商店安装：<ul>
-<li>Windows系统，Microsoft Store</li>
-<li>Mac系统，AppStore</li>
-</ul>
-</li>
-</ul>
-<p>CentOS，使用yum命令安装软件。</p>
-<p>Ubuntu，使用apt命令安装软件。</p>
-<h3 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h3><p><code>yum</code>，CentOS的RPM包管理器，用于自动化安装配置Linux软件，并可以自动解决依赖问题。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum [-y] [install | remove | search] 软件名称</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>-y</code>，自动确认安装或卸载</li>
-</ul>
-<p><strong>yum命令需要root权限，需要联网。</strong></p>
-<h3 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h3><p>Ubuntu使用apt包管理器（安装<code>.deb</code>文件）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt [-y] [install | remove | search] 软件名称</span><br></pre></td></tr></table></figure>
-
-<p>用法和yum一致，也需要<strong>root权限和联网</strong>。</p>
-<h2 id="服务控制"><a href="#服务控制" class="headerlink" title="服务控制"></a>服务控制</h2><p>Linux系统很多软件支持使用功能<code>systemctl</code>命令控制：启动、停止、开机自启。</p>
-<p>能够被systemctl管理的软件，一般被称为<strong>服务</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start | stop | status | <span class="built_in">enable</span> | <span class="built_in">disable</span> 服务名</span><br></pre></td></tr></table></figure>
-
-<p>系统内置的服务比较多，如：</p>
-<ul>
-<li>NetworkManager，主网络服务</li>
-<li>network，副网络服务</li>
-<li>firewalld，防火墙服务</li>
-<li>sshd，ssh服务</li>
-</ul>
-<p>第三方软件，只要有注册服务功能的，就可以通过systemctl进行控制。（也可以通过手动添加注册服务）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/04-Linux%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" data-id="clniyiy740005tculf266g6kx" data-title="04-Linux软件安装【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" data-id="clnjr9kla000sucul55ym2sub" data-title="Linux常用快捷键" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -509,7 +524,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
     </div>
   </div>
 
@@ -519,7 +534,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 10px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
+      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
     </div>
   </div>
 
@@ -541,6 +556,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/">Spark环境配置-单机Local模式</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/09/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/">Hadoop环境配置-单机Local模式</a>
           </li>
         
@@ -554,10 +573,6 @@
         
           <li>
             <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/">06-Linux进程管理</a>
           </li>
         
       </ul>

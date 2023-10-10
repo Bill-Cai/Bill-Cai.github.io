@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Spark环境配置-单机Local模式 | My Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Local模式基本原理本质：启动一个JVM Process进程（一个进程内有多个线程，多线程的并行化），执行任务（Task）。 Local模式可以限制模拟Spark集群环境的线程数量，即Local[N]或Local[*]。  N表示可以使用N个线程（不指定N，则默认1个线程），每个线程拥有一个CPU Core。通常CPU有几个Core就指定几个线程。 Local[*]表示按照CPU最多的Cor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark环境配置-单机Local模式">
+<meta property="og:url" content="http://bill-cai.github.io/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="My Blog">
+<meta property="og:description" content="Local模式基本原理本质：启动一个JVM Process进程（一个进程内有多个线程，多线程的并行化），执行任务（Task）。 Local模式可以限制模拟Spark集群环境的线程数量，即Local[N]或Local[*]。  N表示可以使用N个线程（不指定N，则默认1个线程），每个线程拥有一个CPU Core。通常CPU有几个Core就指定几个线程。 Local[*]表示按照CPU最多的Cor">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231010105503.png">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231010105920.png">
+<meta property="og:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231010111939.png">
+<meta property="article:published_time" content="2023-10-10T02:51:32.000Z">
+<meta property="article:modified_time" content="2023-10-10T03:21:25.265Z">
+<meta property="article:author" content="Bill Cai">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Hadoop">
+<meta property="article:tag" content="Spark">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231010105503.png">
+  
+    <link rel="alternate" href="/atom.xml" title="My Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/blog.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">My Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://bill-cai.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Spark环境配置-单机Local模式" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time class="dt-published" datetime="2023-10-10T02:51:32.000Z" itemprop="datePublished">2023-10-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Spark环境配置-单机Local模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="Local模式基本原理"><a href="#Local模式基本原理" class="headerlink" title="Local模式基本原理"></a>Local模式基本原理</h2><p>本质：启动一个JVM Process进程（<strong>一个进程内有多个线程</strong>，多线程的并行化），执行任务（Task）。</p>
+<p>Local模式可以限制模拟Spark集群环境的线程数量，即<code>Local[N]</code>或<code>Local[*]</code>。</p>
+<ul>
+<li>N表示可以使用N个线程（不指定N，则默认1个线程），每个线程拥有一个CPU Core。通常CPU有几个Core就指定几个线程。</li>
+<li><code>Local[*]</code>表示按照CPU最多的Cores设置线程数。</li>
+</ul>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231010105503.png" alt="Local模式：一个进程内有多个线程"></p>
+<p>Local模式下，有一个Spark程序开一个Local进程</p>
+<ul>
+<li>一个Local进程只能运行一个Spark程序；</li>
+<li>如果要运行多个Spark程序，则需要执行多个相互独立的Local进程。</li>
+</ul>
+<p>每个Local进程中：</p>
+<ul>
+<li>Master和Worker都是Local进程本身</li>
+<li>Driver也是Local本身，没有独立的Executor角色</li>
+<li>由Local进程（Driver）的线程提供计算能力</li>
+</ul>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231010105920.png" alt="多任务，多线程"></p>
+<h2 id="前置准备"><a href="#前置准备" class="headerlink" title="前置准备"></a>前置准备</h2><p>按照<a href="/2023/10/09/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" title="Hadoop环境配置-单机Local模式">Hadoop环境配置-单机Local模式</a>配置hadoop单机环境。即，完成JDK和hadoop的安装配置。</p>
+<h3 id="安装conda"><a href="#安装conda" class="headerlink" title="安装conda"></a>安装conda</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh</span><br><span class="line">bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda</span><br></pre></td></tr></table></figure>
+
+<p><strong>添加环境变量</strong>（<code>vim /etc/profile</code>）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/export/server/conda/bin</span><br></pre></td></tr></table></figure>
+
+<p>并激活（<code>source /etc/profile</code>）。</p>
+<p><strong>初始化conda</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">conda init bash</span><br><span class="line">conda config --<span class="built_in">set</span> auto_update_conda off &amp;&amp; \</span><br><span class="line">    conda config --<span class="built_in">set</span> auto_activate_base off &amp;&amp; \</span><br><span class="line">    conda config --add channels conda-forge &amp;&amp; \</span><br><span class="line">    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2 &amp;&amp; \</span><br><span class="line">    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro &amp;&amp; \</span><br><span class="line">    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r &amp;&amp; \</span><br><span class="line">    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free &amp;&amp; \</span><br><span class="line">    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main &amp;&amp; \</span><br><span class="line">    conda config --<span class="built_in">set</span> channel_priority flexible</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建Python虚拟环境"><a href="#创建Python虚拟环境" class="headerlink" title="创建Python虚拟环境"></a>创建Python虚拟环境</h3><p>推荐使用Python:3.8的解释器环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n pyspark python=3.8 -y</span><br></pre></td></tr></table></figure>
+
+<p>激活环境：<code>conda activate pyspark</code></p>
+<h2 id="安装Spark"><a href="#安装Spark" class="headerlink" title="安装Spark"></a>安装Spark</h2><p>Spark下载地址：</p>
+<ul>
+<li>官网：<a target="_blank" rel="noopener" href="https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz">https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz</a></li>
+</ul>
+<p>下载并解压Spark，创建软链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /export/server</span><br><span class="line">curl -LO https://dlcdn.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz</span><br><span class="line">tar -zxvf spark-3.5.0-bin-hadoop3.tgz -C /export/server</span><br><span class="line"><span class="built_in">ln</span> -s /export/server/spark-3.5.0-bin-hadoop3 /export/server/spark</span><br></pre></td></tr></table></figure>
+
+<p><strong>添加环境变量</strong>（<code>vim /etc/profile</code>）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> SPARK_HOME=/export/server/spark</span><br><span class="line"><span class="built_in">export</span> PYSPARK_PYTHON=/export/server/conda/envs/pyspark/bin/python</span><br><span class="line"><span class="built_in">export</span> HADOOP_CONF_DIR=<span class="variable">$HADOOP_HOME</span>/etc/hadoop</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$SPARK_HOME</span>/bin</span><br></pre></td></tr></table></figure>
+
+<p>并激活（<code>source /etc/profile</code>）。</p>
+<h2 id="运行Local模式"><a href="#运行Local模式" class="headerlink" title="运行Local模式"></a>运行Local模式</h2><p>因为已经添加了<code>PYSPARK_PYTHON</code>，可以直接运行该文件夹下的<code>pyspark</code>等程序。</p>
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyspark --master <span class="built_in">local</span>[*]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231010111939.png" alt="运行spark程序"></p>
+<h3 id="pyspark样例"><a href="#pyspark样例" class="headerlink" title="pyspark样例"></a>pyspark样例</h3><p>运行Spark的Python样例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --master <span class="built_in">local</span>[*] /export/server/spark/examples/src/main/python/pi.py</span><br></pre></td></tr></table></figure>
+
+<p><code>pi.py</code>为Python的Spark并行计算程序，代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Licensed to the Apache Software Foundation (ASF) under one or more</span></span><br><span class="line"><span class="comment"># contributor license agreements.  See the NOTICE file distributed with</span></span><br><span class="line"><span class="comment"># this work for additional information regarding copyright ownership.</span></span><br><span class="line"><span class="comment"># The ASF licenses this file to You under the Apache License, Version 2.0</span></span><br><span class="line"><span class="comment"># (the &quot;License&quot;); you may not use this file except in compliance with</span></span><br><span class="line"><span class="comment"># the License.  You may obtain a copy of the License at</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#    http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Unless required by applicable law or agreed to in writing, software</span></span><br><span class="line"><span class="comment"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span></span><br><span class="line"><span class="comment"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span></span><br><span class="line"><span class="comment"># See the License for the specific language governing permissions and</span></span><br><span class="line"><span class="comment"># limitations under the License.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line">from random import random</span><br><span class="line">from operator import add</span><br><span class="line"></span><br><span class="line">from pyspark.sql import SparkSession</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">        Usage: pi [partitions]</span></span><br><span class="line"><span class="string">    &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">    spark = SparkSession\</span><br><span class="line">        .builder\</span><br><span class="line">        .appName(<span class="string">&quot;PythonPi&quot;</span>)\</span><br><span class="line">        .getOrCreate()</span><br><span class="line"></span><br><span class="line">    partitions = int(sys.argv[1]) <span class="keyword">if</span> len(sys.argv) &gt; 1 <span class="keyword">else</span> 2</span><br><span class="line">    n = 100000 * partitions</span><br><span class="line"></span><br><span class="line">    def f(_: int) -&gt; <span class="built_in">float</span>:</span><br><span class="line">        x = random() * 2 - 1</span><br><span class="line">        y = random() * 2 - 1</span><br><span class="line">        <span class="built_in">return</span> 1 <span class="keyword">if</span> x ** 2 + y ** 2 &lt;= 1 <span class="keyword">else</span> 0</span><br><span class="line"></span><br><span class="line">    count = spark.sparkContext.parallelize(range(1, n + 1), partitions).map(f).reduce(add)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Pi is roughly %f&quot;</span> % (4.0 * count / n))</span><br><span class="line"></span><br><span class="line">    spark.stop()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" data-id="clnjr9kld0014uculbbebhyc9" data-title="Spark环境配置-单机Local模式" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/10/09/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hadoop环境配置-单机Local模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">October 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/">Spark环境配置-单机Local模式</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/09/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/">Hadoop环境配置-单机Local模式</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置hadoop用户SSH免密登录</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 Bill Cai<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  </div>
+</body>
+</html>
