@@ -73,6 +73,77 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-辐射校正" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/12/%E8%BE%90%E5%B0%84%E6%A0%A1%E6%AD%A3/" class="article-date">
+  <time class="dt-published" datetime="2023-10-12T12:59:43.000Z" itemprop="datePublished">2023-10-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/12/%E8%BE%90%E5%B0%84%E6%A0%A1%E6%AD%A3/">辐射校正</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="辐射校正"><a href="#辐射校正" class="headerlink" title="辐射校正"></a>辐射校正</h2><p>完整的辐射校正，包括遥感器校准、大气校正、太阳高度和地形校正。</p>
+<p>一些概念：</p>
+<ul>
+<li>DN值（Digital Number）：像元亮度值，记录地物灰度值，即传感器得到的数字测量值。<ul>
+<li>其大小与传感器的辐射分辨率、地物发射频率、大气透过率、散射率有关。</li>
+<li>反映地物辐射率。</li>
+</ul>
+</li>
+<li>辐射率（Radiance）：辐射亮度值，某一面积的辐射能量的总和，是<strong>辐射定标结果</strong>之一。</li>
+<li>反射率（Reflectance）：物体表面反射的辐射量比接收的辐射量。</li>
+<li>表观反射率：大气层顶的反射率，辐射定标的结果之一。</li>
+<li>地表反射率（地物真实反射率）：由辐射亮度图像计算得到，计算模型如辐射传输模型（去除云、大气、临近地物的影响）。</li>
+</ul>
+<p><strong>辐射校正</strong>：图像数据中依附在辐射亮度里的各种失真（噪声）的过程。</p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231012222753.png" alt="遥感图像辐射校正的数据流程"></p>
+<h2 id="辐射定标"><a href="#辐射定标" class="headerlink" title="辐射定标"></a>辐射定标</h2><p><strong>辐射定标</strong>就是将图像的数字量化值（<strong>DN值</strong>）转化为<strong>辐射亮度值</strong>或者反射率或者表面温度等物理量的处理过程。</p>
+<p>辐射亮度值：</p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231012223023.png" alt="辐射定标公式"></p>
+<h2 id="大气校正"><a href="#大气校正" class="headerlink" title="大气校正"></a>大气校正</h2><p>绝对大气校正方法：将遥感图像的DN值转换为地表反射率、地表辐射率、地表温度等的方法（有实际物理意义）。</p>
+<ul>
+<li>基于辐射传输模型（MORTRAN、LOWTRAN、ATCOR）</li>
+<li>基于简化辐射传输模型的黑暗像元法</li>
+<li>基于统计学模型的反射率反演</li>
+</ul>
+<p>相对大气校正方法：校正后得到的图像，相同的DN值表示相同的地物反射率，其结果不考虑地物的实际反射率（不是实际值）。</p>
+<ul>
+<li>直方图匹配法</li>
+<li>基于统计的不变目标法</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/12/%E8%BE%90%E5%B0%84%E6%A0%A1%E6%AD%A3/" data-id="clnnap94h001glculfcyshxjh" data-title="辐射校正" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Remote-sensing/" rel="tag">Remote sensing</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Spark环境配置-单机Local模式" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" class="article-date">
@@ -155,7 +226,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" data-id="clnjrec54000wosul3p6acg07" data-title="Spark环境配置-单机Local模式" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" data-id="clnnap94c000tlculewy6dbcx" data-title="Spark环境配置-单机Local模式" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -276,7 +347,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/09/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" data-id="clnjrec4y000dosulgwr40ixy" data-title="Hadoop环境配置-单机Local模式" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/09/Hadoop%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/" data-id="clnnap9430008lcul8umk50ay" data-title="Hadoop环境配置-单机Local模式" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -362,7 +433,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnjrec52000posul6s250zsn" data-title="Linux集群配置hadoop用户SSH免密登录" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/06/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AEhadoop%E7%94%A8%E6%88%B7SSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnnap94b000rlcul7ww36abq" data-title="Linux集群配置hadoop用户SSH免密登录" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -502,75 +573,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnjrec53000sosul2eg859uw" data-title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Linux环境变量" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="article-date">
-  <time class="dt-published" datetime="2023-10-04T04:56:30.000Z" itemprop="datePublished">2023-10-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>Linux上使用的一系列命令本质上是一个个的可执行程序。</p>
-<ul>
-<li>例如，<code>bash</code>本质上是<code>/bin/bash</code></li>
-</ul>
-<p>之所以这些命令无论在什么工作目录都能执行，就是因为有<strong>环境变量</strong>。</p>
-<p>环境变量，是操作系统在运行时记录的一些关键性的信息，用以辅助系统运行。</p>
-<p>在Linux系统中通过<code>env</code>命令可以查看当前系统中记录的环境变量。</p>
-<ul>
-<li>环境变量以<code>key=value</code>的形式记录。</li>
-</ul>
-<h2 id="PATH"><a href="#PATH" class="headerlink" title="PATH"></a>PATH</h2><p>PATH记录了系统执行任何命令的搜索路径。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">env</span> | grep PATH</span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib</span><br></pre></td></tr></table></figure>
-
-<p>当执行命令时，会按照上面的顺序搜索要执行的程序的本体。</p>
-<h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><h3 id="符号"><a href="#符号" class="headerlink" title="$符号"></a><code>$</code>符号</h3><p><code>$</code>符号用于取变量的值。</p>
-<ul>
-<li>可以通过<code>&#123;&#125;</code>标注要取的变量</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib</span><br><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH&#125;</span>ABC</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/libABC</span><br></pre></td></tr></table></figure>
-
-<h3 id="临时设置"><a href="#临时设置" class="headerlink" title="临时设置"></a>临时设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> 变量名=变量值</span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/opt/conda/bin:<span class="variable">$&#123;PATH&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="永久生效"><a href="#永久生效" class="headerlink" title="永久生效"></a>永久生效</h3><p>针对当前用户，修改配置文件<code>~/.bashrc</code></p>
-<p>针对所有用户，修改配置文件<code>/etc/profile</code></p>
-<p>执行<code>source 配置文件</code>使修改立即生效（或者重新登录终端）。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="clnjrec50000iosul2m2afxbi" data-title="Linux环境变量" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" data-id="clnnap94b000plcul0ltsdp10" data-title="Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -602,7 +605,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-sensing/" rel="tag">Remote sensing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
     </div>
   </div>
 
@@ -612,7 +615,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
+      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Remote-sensing/" style="font-size: 10px;">Remote sensing</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
     </div>
   </div>
 
@@ -634,6 +637,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/12/%E8%BE%90%E5%B0%84%E6%A0%A1%E6%AD%A3/">辐射校正</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/">Spark环境配置-单机Local模式</a>
           </li>
         
@@ -647,10 +654,6 @@
         
           <li>
             <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
           </li>
         
       </ul>

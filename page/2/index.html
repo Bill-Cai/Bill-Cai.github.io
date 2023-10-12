@@ -73,6 +73,74 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Linux环境变量" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="article-date">
+  <time class="dt-published" datetime="2023-10-04T04:56:30.000Z" itemprop="datePublished">2023-10-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>Linux上使用的一系列命令本质上是一个个的可执行程序。</p>
+<ul>
+<li>例如，<code>bash</code>本质上是<code>/bin/bash</code></li>
+</ul>
+<p>之所以这些命令无论在什么工作目录都能执行，就是因为有<strong>环境变量</strong>。</p>
+<p>环境变量，是操作系统在运行时记录的一些关键性的信息，用以辅助系统运行。</p>
+<p>在Linux系统中通过<code>env</code>命令可以查看当前系统中记录的环境变量。</p>
+<ul>
+<li>环境变量以<code>key=value</code>的形式记录。</li>
+</ul>
+<h2 id="PATH"><a href="#PATH" class="headerlink" title="PATH"></a>PATH</h2><p>PATH记录了系统执行任何命令的搜索路径。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">env</span> | grep PATH</span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib</span><br></pre></td></tr></table></figure>
+
+<p>当执行命令时，会按照上面的顺序搜索要执行的程序的本体。</p>
+<h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><h3 id="符号"><a href="#符号" class="headerlink" title="$符号"></a><code>$</code>符号</h3><p><code>$</code>符号用于取变量的值。</p>
+<ul>
+<li>可以通过<code>&#123;&#125;</code>标注要取的变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib</span><br><span class="line">$ <span class="built_in">echo</span> <span class="variable">$&#123;PATH&#125;</span>ABC</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/libABC</span><br></pre></td></tr></table></figure>
+
+<h3 id="临时设置"><a href="#临时设置" class="headerlink" title="临时设置"></a>临时设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> 变量名=变量值</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/opt/conda/bin:<span class="variable">$&#123;PATH&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="永久生效"><a href="#永久生效" class="headerlink" title="永久生效"></a>永久生效</h3><p>针对当前用户，修改配置文件<code>~/.bashrc</code></p>
+<p>针对所有用户，修改配置文件<code>/etc/profile</code></p>
+<p>执行<code>source 配置文件</code>使修改立即生效（或者重新登录终端）。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" data-id="clnnap94a000nlculaqkpa0ao" data-title="Linux环境变量" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-06-Linux进程管理" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" class="article-date">
@@ -154,7 +222,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnjrec4x0008osul3nuzh9vx" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/06-Linux%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/" data-id="clnnap944000alculfxojggts" data-title="06-Linux进程管理" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -235,7 +303,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnjrec4t0003osul3rvl1osu" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/05-Linux%E7%BD%91%E7%BB%9C/" data-id="clnnap946000dlculc5okdbrf" data-title="05-Linux网络" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -306,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clnjrec51000kosulddpg0sfw" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/IP%E5%92%8C%E4%B8%BB%E6%9C%BA%E5%90%8D/" data-id="clnnap947000flcul2hpo991n" data-title="Linux IP和主机名" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -419,80 +487,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/" data-id="clnjrec4z000fosul97r7egai" data-title="Linux其他命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-Linux常用快捷键" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="article-date">
-  <time class="dt-published" datetime="2023-10-04T01:30:02.000Z" itemprop="datePublished">2023-10-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/">Linux常用快捷键</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><p><code>ctrl+C</code></p>
-<ul>
-<li>强制停止命令执行</li>
-<li>命令输入错误时，退出当前输入</li>
-</ul>
-<p><code>ctrl+D</code></p>
-<ul>
-<li>退出账户登录</li>
-<li>退出特定程序（例如Python的交互环境）</li>
-<li>不能用于退出Vim&#x2F;Vi</li>
-</ul>
-<p><code>history</code></p>
-<ul>
-<li>查看历史输入过的命令</li>
-</ul>
-<p><code>!</code>+前缀字符</p>
-<ul>
-<li>自动匹配上一个前缀相同的命令</li>
-</ul>
-<p><code>ctrl+R</code>，输入命令</p>
-<ul>
-<li>匹配历史命令</li>
-<li>回车键直接执行</li>
-<li>键盘左右键，得到此命令（不执行）</li>
-</ul>
-<p><code>ctrl+a</code>，光标跳到命令开头</p>
-<p><code>ctrl+e</code>，光标跳到命令结尾</p>
-<p><code>ctrl+左键</code>，光标左跳一个单词</p>
-<p><code>ctrl+右键</code>，光标右跳一个单词</p>
-<p><code>ctrl+L</code>或者<code>clear</code></p>
-<ul>
-<li>清空终端内容</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/" data-id="clnjrec52000nosul2weeakew" data-title="Linux常用快捷键" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/04/Linux%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4/" data-id="clnnap948000ilcul310xca3a" data-title="Linux其他命令" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -524,7 +519,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-sensing/" rel="tag">Remote sensing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
     </div>
   </div>
 
@@ -534,7 +529,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
+      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Remote-sensing/" style="font-size: 10px;">Remote sensing</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
     </div>
   </div>
 
@@ -556,6 +551,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/12/%E8%BE%90%E5%B0%84%E6%A0%A1%E6%AD%A3/">辐射校正</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/">Spark环境配置-单机Local模式</a>
           </li>
         
@@ -569,10 +568,6 @@
         
           <li>
             <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
           </li>
         
       </ul>

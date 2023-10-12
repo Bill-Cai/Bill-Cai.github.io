@@ -73,6 +73,63 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Windows上的Linux子系统：WSL" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/" class="article-date">
+  <time class="dt-published" datetime="2023-10-03T09:34:37.000Z" itemprop="datePublished">2023-10-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/">Windows上的Linux子系统：WSL</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer" />
+
+<h2 id="WSL"><a href="#WSL" class="headerlink" title="WSL"></a>WSL</h2><p>WSL（Windows Subsystem for Linux），是用于Windows系统之上的Linux子系统。可以在Windows系统中获得Linux系统环境，并<strong>完全直连计算机硬件</strong>，无需通过虚拟机虚拟硬件。</p>
+<p>Win10开启WSL：设置-&gt;程序和功能-&gt;启动或关闭Windows功能-&gt;勾选“适用于Linux的Windows子系统”</p>
+<p>Win10的Microsoft Store中可以下载安装Ubuntu和Microsoft Terminal。</p>
+<h3 id="WSL-Ubuntu"><a href="#WSL-Ubuntu" class="headerlink" title="WSL Ubuntu"></a>WSL Ubuntu</h3><p>WSL Ubuntu默认普通用户，第一次使用时，需要设置用户名和密码。</p>
+<p>如果需要登录root用户，可以：</p>
+<ol>
+<li>在PowerShell中修改默认登录用户为root：<code>ubuntu config --default-user root</code>。</li>
+<li>以root进入Ubuntu终端后使用<code>passwd</code>更改密码。</li>
+<li>再将默认登录用户改为普通用户。</li>
+<li>在Ubuntu终端使用<code>su</code>命令，并输入密码，激活root用户。</li>
+<li>通过<code>exit</code>命令退出到普通用户。</li>
+</ol>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003170917.png" alt="PowerShell中修改默认用户"></p>
+<p><img src="https://gitee.com/bill-cai-1020/md-picgo/raw/master/pic/20231003171210.png" alt="Ubuntu中普通用户和root用户切换"></p>
+<p><strong>需要注意，root用户有最高权限，需要慎重使用，避免错误操作对系统造成损坏。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://bill-cai.github.io/2023/10/03/Windows%E4%B8%8A%E7%9A%84Linux%E5%AD%90%E7%B3%BB%E7%BB%9F%EF%BC%9AWSL/" data-id="clnnap94e0010lculb7j8dzoc" data-title="Windows上的Linux子系统：WSL" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-01 Linux基础" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/10/03/01%20Linux%E5%9F%BA%E7%A1%80/" class="article-date">
@@ -135,7 +192,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/10/03/01%20Linux%E5%9F%BA%E7%A1%80/" data-id="clnjrec4l0000osul251j3mys" data-title="01 Linux基础【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/10/03/01%20Linux%E5%9F%BA%E7%A1%80/" data-id="clnnap93r0000lcul4p7a6493" data-title="01 Linux基础【Linux再学|黑马】" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -202,7 +259,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" data-id="clnjrec4x000aosul3sqo60o4" data-title="DBSCAN - 原理和实现" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/28/DBSCAN-%E5%8E%9F%E7%90%86%E5%92%8C%E5%AE%9E%E7%8E%B0/" data-id="clnnap93z0003lcul3cgv28y0" data-title="DBSCAN - 原理和实现" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -256,7 +313,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/26/hello-world/" data-id="clnjrec58001cosul0okv79rf" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/26/hello-world/" data-id="clnnap94d000ylcul5aej9ook" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -328,7 +385,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://bill-cai.github.io/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-id="clnjrec57001bosul1er5fc7y" data-title="个人博客搭建 - 基于Hexo" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://bill-cai.github.io/2023/09/26/%E5%9F%BA%E4%BA%8EHexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" data-id="clnnap94f0012lcul14qq528g" data-title="个人博客搭建 - 基于Hexo" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -360,7 +417,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/" rel="tag">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Cluster-analysis/" rel="tag">Cluster analysis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Remote-sensing/" rel="tag">Remote sensing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/" rel="tag">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Utils/" rel="tag">Utils</a></li></ul>
     </div>
   </div>
 
@@ -370,7 +427,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
+      <a href="/tags/Algorithm/" style="font-size: 10px;">Algorithm</a> <a href="/tags/Cluster-analysis/" style="font-size: 10px;">Cluster analysis</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Hexo/" style="font-size: 15px;">Hexo</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Remote-sensing/" style="font-size: 10px;">Remote sensing</a> <a href="/tags/Spark/" style="font-size: 10px;">Spark</a> <a href="/tags/Utils/" style="font-size: 10px;">Utils</a>
     </div>
   </div>
 
@@ -392,6 +449,10 @@
       <ul>
         
           <li>
+            <a href="/2023/10/12/%E8%BE%90%E5%B0%84%E6%A0%A1%E6%AD%A3/">辐射校正</a>
+          </li>
+        
+          <li>
             <a href="/2023/10/10/Spark%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE-%E5%8D%95%E6%9C%BALocal%E6%A8%A1%E5%BC%8F/">Spark环境配置-单机Local模式</a>
           </li>
         
@@ -405,10 +466,6 @@
         
           <li>
             <a href="/2023/10/05/Linux%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AESSH%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">Linux集群配置SSH免密登录 - 基于阿里云容器服务Kubernetes版（ACK）</a>
-          </li>
-        
-          <li>
-            <a href="/2023/10/04/Linux%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">Linux环境变量</a>
           </li>
         
       </ul>
